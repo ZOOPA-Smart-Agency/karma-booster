@@ -1,0 +1,199 @@
+# karma-booster
+
+> Skill de Claude Code para evaluar y impulsar la autoridad digital de cualquier profesional. Toma un perfil de entrada, calcula el **Digital Karma Index (DKI)** sobre las 5 capas que importan, identifica las plataformas relevantes según sector, y genera un plan personalizado por fases (Foundation · Build · Scale).
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![ZOOPA](https://img.shields.io/badge/by-ZOOPA--Smart--Agency-blue.svg)](https://zoopa.es)
+
+## Qué hace este skill
+
+1. Recibe perfil del profesional (LinkedIn URL, CV PDF, sitio web, o cuestionario)
+2. Identifica sector + sub-sector + audiencia objetivo
+3. Calcula **DKI baseline** (0-1000) con breakdown en 5 capas
+4. Compara con benchmarks del sector
+5. Identifica gaps priorizados
+6. Genera plan personalizado 90 días (Foundation/Build/Scale)
+7. Recomienda plataformas core para el sector específico
+8. Integra con Authority Boost 90 service de Zoopa
+
+## El Digital Karma Index (DKI)
+
+Score composite 0-1000 que mide autoridad digital cross-platform de un profesional. Compuesta de 5 capas con pesos según impacto real en visibilidad:
+
+```
+DKI = (E × 0.40) + (D × 0.20) + (L × 0.15) + (T × 0.15) + (O × 0.10)
+
+E = Earned Authority    (followers + karma nativos, ponderados por sector)
+D = Discoverability     (Wikipedia + Wikidata + Schema.org + Google KP + directorios)
+L = LLM Visibility      (vía GEORadar: SoV + Position + Sentiment + Co-branding)
+T = Trust Signals       (Recommendations + Reviews + Press + Verified + TEDx)
+O = Owned Anchor        (sitio personal DA + newsletter + long-form + libros)
+```
+
+Scale interpretation:
+- 0-100 · **Invisible**
+- 100-300 · **Emerging**
+- 300-500 · **Established en niche**
+- 500-700 · **Recognized regional/sectorial**
+- 700-900 · **Leading authority**
+- 900-1000 · **Top of field globally**
+
+Detalle completo: [`references/digital-karma-formula.md`](references/digital-karma-formula.md)
+
+## Sectores cubiertos (20)
+
+1. Tech / Software / Engineer
+2. Legal
+3. Medical / Healthcare
+4. Actor / Performing Arts
+5. Designer / Creative
+6. Academic / Researcher
+7. CEO B2B SaaS / Founder
+8. Chef / Restaurant
+9. Writer / Author
+10. Musician
+11. Architect
+12. Athlete
+13. Politician
+14. Consultant / Coach
+15. Journalist / Analyst
+16. Influencer / Creator
+17. Investor / VC
+18. Real Estate Pro
+19. Financial Pro
+20. Catch-all dinámico (otros) — busca plataformas vía WebSearch
+
+Cada sector tiene su mapping de plataformas con pesos `W_sector` 0-3.
+
+## Plataformas catalogadas (45)
+
+- **10 generales** (LinkedIn, X, Bluesky, Threads, Mastodon, FB, Instagram, TikTok, YouTube)
+- **4 community/Q&A** (HN, Reddit, Quora, Stack Overflow)
+- **4 editorial** (Substack, Medium, LinkedIn Newsletter, Beehiiv)
+- **6 tech** (GitHub, Dev.to, Hashnode, Lobste.rs, HackerNoon, DZone)
+- **5 academic** (Google Scholar, ORCID, ResearchGate, SemanticScholar, arXiv)
+- **6 reviews** (Google, Trustpilot, G2, Glassdoor, Goodreads, Amazon)
+- **14 sector-specialized** (IMDb, Spotify, Doximity, ArchDaily, Dribbble, etc.)
+- **4 discoverability** (Wikipedia, Wikidata, Google KP, Schema.org)
+- **2 events** (TED/TEDx, conference circuit)
+
+Catálogo: [`references/platform-catalog-master.md`](references/platform-catalog-master.md)
+
+## Cómo usar el skill
+
+### Invocación
+
+En Claude Code, escribir:
+```
+karma booster
+```
+
+O el trigger natural:
+```
+calcula mi digital karma
+evalúa mi perfil online
+qué plataformas debería trabajar
+```
+
+### Inputs aceptados
+
+| Input | Cómo proveerlo |
+|---|---|
+| LinkedIn URL pública | Pega URL `linkedin.com/in/{slug}` |
+| CV / Resume PDF | Adjunta el PDF |
+| Sitio web personal | Pega URL del dominio |
+| Cuestionario interactivo | El skill te hace 6 turnos de preguntas |
+
+### Output
+
+3 documentos:
+
+1. `{client-slug}-profile-assessment.md` — perfil estructurado
+2. `{client-slug}-dki-baseline-report.md` — DKI calculado + gaps
+3. `{client-slug}-personalized-plan.md` — plan 90 días
+
+Outputs van a `~/Documents/claudecode-proj/karma-booster-clients/{slug}/` (LOCAL, NUNCA al repo).
+
+## Privacidad y GDPR
+
+- **NUNCA scrapear** LinkedIn sin consentimiento explícito del cliente
+- Datos del cliente guardados LOCAL, no en este repo
+- Retención datos: 30 días post-cierre cliente
+- Atender solicitudes GDPR (acceso/borrado/portabilidad) en 72h
+- CVs procesados en memoria, no se guarda el PDF original
+
+## Integración con ecosistema Zoopa / 498A
+
+Este skill es la herramienta de evaluación inicial del servicio comercial **Authority Boost 90** (3 meses, €5-30K según tier).
+
+| Skill / Producto | Función |
+|---|---|
+| **karma-booster** (este skill) | Evaluación + plan inicial |
+| **content-factory** | Genera contenido para los canales recomendados |
+| **GEORadar** (producto Zoopa) | Mide L (LLM Visibility) en el DKI |
+| **DOC** (producto Zoopa) | Optimiza AX del sitio personal del cliente |
+| **S.A.M.** (producto Zoopa) | Valida contenido contra prompts target |
+| **Authority Boost 90** (servicio comercial) | Ejecución del plan completo 90 días |
+
+## Estructura del skill
+
+```
+karma-booster/
+├── SKILL.md                                # Orchestrator principal
+├── README.md                               # Este archivo
+├── references/
+│   ├── digital-karma-formula.md           # DKI formula completa
+│   ├── platform-catalog-master.md         # 45 plataformas
+│   ├── sector-platform-mappings.md        # 20 sectores → plataformas
+│   ├── profile-assessment-process.md      # Cómo procesar inputs
+│   ├── phase-system.md                    # Foundation/Build/Scale
+│   └── content-styles-imports/            # Style guides imported
+│       ├── linkedin-voice.md
+│       ├── linkedin-optimization-deep-dive.md
+│       ├── x-twitter-voice-style.md
+│       ├── substack-style.md
+│       ├── quora-best-practices.md
+│       ├── orthography-rules.md
+│       ├── platform-mechanics.md
+│       └── editorial-patterns.md
+├── scripts/
+│   └── calculate_dki.py                   # DKI calculator
+├── templates/                              # Output templates (próximo)
+└── examples/
+    └── carlos-ortet-case-study.md         # Case study V1
+```
+
+## Versionado
+
+- **V1.0** · 2026-05-24 · skill creado. Case study único: Carlos Ortet
+- **V1.1** (próximo) · añadir 5+ sectores con primeros clientes externos
+- **V1.5** · integration con GEORadar API para L automático
+- **V2.0** · web UI público en `zoopa.es/karma-checker` (audit free como lead gen)
+
+## Contribuir
+
+Este skill se mantiene por el equipo Zoopa / 498A. Para añadir:
+- **Nueva plataforma**: PR a `references/platform-catalog-master.md` + actualizar normalizer en `scripts/calculate_dki.py`
+- **Nuevo sector**: PR a `references/sector-platform-mappings.md` con pesos validados
+- **Lessons aprendidos**: PR a `examples/{client}-case-study.md`
+
+## Licencia
+
+MIT.
+
+## Maintainers
+
+- **Carlos Ortet** ([carlosortet.com](https://carlosortet.com)) · CEO Zoopa · Director 498A
+- **Mer Canet** · Operaciones contenido
+- **Community lead GEORadar** · Medición LLM visibility
+
+## Links
+
+- [Zoopa](https://zoopa.es) · Innovation & Creative Technology
+- [498AS](https://498as.com) · AI R&D Division
+- [GEORadar](https://georadar.app) · LLM brand visibility
+- [content-factory skill](https://github.com/498AS/content-factory) · skill complementario
+
+---
+
+*Skill iniciado 2026-05-24. Producto de la metodología desarrollada en la agencia Zoopa para Authority Boost 90 service.*

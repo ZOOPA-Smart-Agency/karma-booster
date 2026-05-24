@@ -1,0 +1,39 @@
+# Client data NEVER committed
+karma-booster-clients/
+*-profile-data.yaml
+*-profile-data.json
+*-dki-baseline-report.md
+*-personalized-plan.md
+*-foundation-report-*.md
+*-mid-review-*.md
+*-final-report-*.md
+
+# Sensitive PDFs / CVs
+*.pdf
+!docs/**/*.pdf
+!examples/**/*.pdf
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporales
+/tmp/
+*.bak
+*.tmp
