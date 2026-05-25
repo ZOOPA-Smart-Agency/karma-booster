@@ -160,13 +160,32 @@ karma-booster/
 │   └── calculate_dki.py                   # DKI calculator
 ├── templates/                              # Output templates (próximo)
 └── examples/
-    └── carlos-ortet-case-study.md         # Case study V1
+    ├── carlos-ortet-case-study.md         # Case study V1 (senior)
+    └── guillermo-cardiel-case-study.md    # Case study V1.1 (junior, contraste)
 ```
+
+## Servicio comercial · Authority Boost 90
+
+El skill karma-booster es el **calculador DKI + planificador** que alimenta el servicio comercial **Authority Boost 90** de Zoopa Smart Agency.
+
+- **Sitio público compartible**: https://zoopa-smart-agency.github.io/authority-boost-90/
+- **Página de case studies**: https://zoopa-smart-agency.github.io/authority-boost-90/case-studies.html
+- **Equipo core 6 personas**: Carlos Ortet (Strategy) · Mer Canet (Biz) · Mia Ortet (Product) · Matteo Remuzzi (Service) · Guillermo Cardiel (Workflow) · Pol Reyes (New biz)
+
+### Case studies publicados (2)
+
+| Profile | Tipo | DKI baseline | DKI día 90 | Delta |
+|---|---|---|---|---|
+| **Carlos Ortet** | Senior · Tech / Designer | 356 | 560 | +204 |
+| **Guille Cardiel** | Junior · Workflow design | 142 | 385 | +243 |
+
+Demuestran el USP del método: funciona en ambos extremos del seniority. Ver `examples/` para el detalle de cada caso.
 
 ## Versionado
 
-- **V1.0** · 2026-05-24 · skill creado. Case study único: Carlos Ortet
-- **V1.1** (próximo) · añadir 5+ sectores con primeros clientes externos
+- **V1.0** · 2026-05-24 · skill creado. Case study Carlos Ortet
+- **V1.1** · 2026-05-25 · case study Guille Cardiel añadido (perfil junior contraste) + sitio público AB90 V1.4
+- **V1.2** (próximo) · añadir 5+ sectores con primeros clientes externos
 - **V1.5** · integration con GEORadar API para L automático
 - **V2.0** · web UI público en `zoopa.es/karma-checker` (audit free como lead gen)
 
