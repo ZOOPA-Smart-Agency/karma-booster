@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRD · karma-booster · evaluación + plan de autoridad digital</title>
+  <meta name="description" content="Product Requirements Document del skill karma-booster (Claude Code · Zoopa Smart Agency / 498A). Sistema de scoring de autoridad digital cross-platform con DKI + Platform Authority Database (86 plataformas) + mantenimiento trimestral.">
+  <meta property="og:title" content="PRD · karma-booster">
+  <meta property="og:description" content="Product Requirements Document del skill karma-booster. DKI + Platform Authority Database + sistema de mantenimiento trimestral.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #fafaf7;
+      --paper-white: #ffffff;
+      --ink: #1a1a1a;
+      --ink-soft: #3d3d3d;
+      --muted: #6b6b6b;
+      --rule: #d8d8d2;
+      --accent: #0d9488;
+      --accent-soft: #ccfbf1;
+      --accent-deep: #0f766e;
+      --gray-bg: #f3f3ee;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 11pt; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--gray-bg);
+      color: var(--ink);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    code, .mono {
+      font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+      font-size: 0.92em;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 20px auto;
+      padding: 22mm 22mm 20mm 22mm;
+      background: var(--paper);
+      box-shadow: 0 2px 30px rgba(0,0,0,0.08);
+      page-break-after: always;
+      position: relative;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .page-tag {
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .page-num {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 14pt;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.5px;
+    }
+
+    h1.cover-title {
+      font-size: 36pt;
+      line-height: 1.05;
+      margin-bottom: 14px;
+    }
+    h1.cover-title .accent { color: var(--accent); font-style: italic; }
+
+    h2.page-title {
+      font-size: 22pt;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+    h2.page-title .accent { color: var(--accent); font-style: italic; }
+
+    h3.section-title {
+      font-size: 12.5pt;
+      font-weight: 600;
+      margin-top: 16px;
+      margin-bottom: 8px;
+      letter-spacing: -0.2px;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-family: 'Inter', sans-serif;
+      font-size: 9pt;
+    }
+    h3.section-title .num {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 14pt;
+      color: var(--accent);
+      font-weight: 500;
+      margin-right: 8px;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    h4.subhead {
+      font-family: 'Inter', sans-serif;
+      font-size: 9.5pt;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 12px 0 4px;
+    }
+
+    p { margin-bottom: 8px; color: var(--ink-soft); font-size: 10pt; }
+    p.lead {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 14pt;
+      line-height: 1.4;
+      color: var(--ink);
+      margin: 6px 0 14px;
+      font-weight: 400;
+    }
+    p.lead strong { color: var(--accent); font-weight: 500; }
+
+    .small { font-size: 9pt; color: var(--muted); }
+
+    ul, ol { margin: 4px 0 8px 18px; }
+    li { font-size: 10pt; color: var(--ink-soft); margin-bottom: 3px; line-height: 1.5; }
+    li strong { color: var(--ink); font-weight: 600; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 8px 0;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin: 8px 0;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 8px 0;
+    }
+
+    .panel {
+      border: 1px solid var(--rule);
+      background: var(--paper-white);
+      padding: 12px 14px;
+      border-radius: 3px;
+    }
+    .panel-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .panel-body { font-size: 9.5pt; color: var(--ink-soft); line-height: 1.5; }
+    .panel-body strong { color: var(--ink); font-weight: 600; }
+
+    .insight {
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent);
+      padding: 12px 16px;
+      margin: 10px 0;
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 10.5pt;
+      color: var(--ink);
+      font-style: italic;
+      line-height: 1.55;
+    }
+    .insight strong {
+      font-style: normal;
+      color: var(--accent-deep);
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0;
+      font-size: 9pt;
+    }
+    table th {
+      background: var(--ink);
+      color: var(--paper);
+      text-align: left;
+      padding: 7px 10px;
+      font-weight: 600;
+      font-size: 7.5pt;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+    table td {
+      padding: 7px 10px;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+      color: var(--ink-soft);
+    }
+    table td strong { color: var(--ink); font-weight: 600; }
+    table tr:nth-child(even) { background: var(--paper-white); }
+
+    .formula {
+      background: var(--ink);
+      color: #f0f0f0;
+      padding: 14px 18px;
+      border-radius: 3px;
+      font-family: 'JetBrains Mono', Consolas, monospace;
+      font-size: 9.5pt;
+      line-height: 1.6;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+    .formula .accent { color: #5eead4; }
+    .formula .comment { color: #888; }
+
+    .chip {
+      display: inline-block;
+      font-size: 8.5pt;
+      padding: 3px 9px;
+      border-radius: 11px;
+      border: 1px solid var(--rule);
+      background: var(--paper-white);
+      color: var(--ink);
+      margin: 2px 4px 2px 0;
+      white-space: nowrap;
+    }
+    .chip.accent {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent-deep);
+      font-weight: 600;
+    }
+
+    .kpi {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px 12px;
+      border: 1px solid var(--rule);
+      background: var(--paper-white);
+    }
+    .kpi-num {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 22pt;
+      color: var(--accent);
+      font-weight: 500;
+      line-height: 1;
+    }
+    .kpi-label {
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 14mm;
+      left: 22mm;
+      right: 22mm;
+      display: flex;
+      justify-content: space-between;
+      font-size: 7.5pt;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      border-top: 1px solid var(--rule);
+      padding-top: 8px;
+    }
+
+    /* COVER specific */
+    .cover-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 9pt;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .cover-meta {
+      display: flex;
+      gap: 24px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--rule);
+      font-size: 8.5pt;
+      color: var(--muted);
+    }
+    .cover-meta strong { color: var(--ink); font-weight: 500; display: block; font-size: 9.5pt; }
+
+    a { color: var(--accent-deep); text-decoration: none; border-bottom: 1px dotted var(--accent); }
+    a:hover { border-bottom-style: solid; }
+
+    @media print {
+      html { font-size: 10.5pt; }
+      body { background: white; }
+      .page { margin: 0; box-shadow: none; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     PAGE 1 · Cover + Problem + Solution + Users + Success metrics
+═══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-tag">PRD · skill karma-booster · v1.2</span>
+    <span class="page-num">01</span>
+  </div>
+
+  <p class="cover-eyebrow">Product Requirements Document</p>
+  <h1 class="cover-title">karma-booster — evaluación<br>+ plan de <span class="accent">autoridad digital</span>.</h1>
+
+  <p class="lead">Skill nativo de Claude Code que evalúa la <strong>autoridad digital</strong> de cualquier profesional, calcula su Digital Karma Index (DKI), prioriza las plataformas donde concentrar esfuerzo, y genera un plan personalizado por fases. Herramienta de evaluación inicial del servicio comercial <strong>Authority Boost 90</strong>.</p>
+
+  <div class="cover-meta">
+    <div><strong>Owner</strong>Carlos Ortet · CEO Zoopa</div>
+    <div><strong>Maintainers</strong>Mer Canet · Mia Ortet · Matteo Remuzzi · Guillermo Cardiel · Pol Reyes</div>
+    <div><strong>Versión</strong>V1.2 · 25 may 2026</div>
+    <div><strong>Repo</strong>github.com/ZOOPA-Smart-Agency/karma-booster</div>
+  </div>
+
+  <h3 class="section-title"><span class="num">01</span>El problema</h3>
+  <p>Cada plataforma tiene su métrica nativa (Reddit karma, LinkedIn SSI, HN karma, h-index). <strong>No existe una métrica unificada cross-platform</strong> que mida autoridad real para un profesional. Tampoco existe un sistema sistemático para decidir <strong>qué plataformas pesan</strong> para un actor vs un abogado vs un CEO B2B. Resultado: 90% de los servicios "personal branding" en mercado son coachs LinkedIn-only que ignoran 6 de las 7 capas que un LLM, un buscador y un decisor humano consultan al evaluar credibilidad.</p>
+
+  <h3 class="section-title"><span class="num">02</span>La solución</h3>
+  <div class="grid-3">
+    <div class="panel">
+      <div class="panel-title">Digital Karma Index</div>
+      <div class="panel-body"><strong>Score 0-1000</strong> compuesto sobre 5 capas (Earned · Discoverability · LLM Visibility · Trust · Owned), con tiers cualitativos de Invisible a Top of field globally.</div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Authority Database</div>
+      <div class="panel-body"><strong>86 plataformas catalogadas</strong> con scoring propietario en 3 dimensiones (Google · LLM · Trust 0-100), priorizadas por sector y objetivo cliente vía script Python.</div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Plan 90 días</div>
+      <div class="panel-body"><strong>3 fases</strong> (Foundation · Build · Scale) con entregables por sub-fase, 5-8 plataformas core elegidas en kickoff, dashboard quincenal.</div>
+    </div>
+  </div>
+
+  <h3 class="section-title"><span class="num">03</span>Usuarios objetivo</h3>
+  <table>
+    <thead>
+      <tr><th>Perfil</th><th>Por qué necesita el skill</th><th>Sector ejemplo</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>C-level B2B</strong></td><td>Su nombre debe aparecer cuando un comprador potencial pregunta a ChatGPT por proveedores.</td><td>Tech CEO · CTO · CMO</td></tr>
+      <tr><td><strong>Founder startup</strong></td><td>Credibilidad para fundraising (Crunchbase, prensa) + hiring (LinkedIn, Glassdoor).</td><td>SaaS · Indie hacker</td></tr>
+      <tr><td><strong>Profesional con consulta</strong></td><td>Trust signals locales + reviews verificables que conviertan a cliente.</td><td>Médico · Abogado · Consultor</td></tr>
+      <tr><td><strong>Académico</strong></td><td>Citation visibility + presencia en knowledge graphs + LLM citation.</td><td>Researcher · PhD industria</td></tr>
+      <tr><td><strong>Creativo / performer</strong></td><td>Discoverability en directorios sectoriales (IMDb, Behance, Spotify Artists).</td><td>Actor · Diseñador · Músico</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="section-title"><span class="num">04</span>Métricas de éxito del skill</h3>
+  <div class="grid-4">
+    <div class="kpi"><span class="kpi-num">3</span><span class="kpi-label">outputs por cliente</span></div>
+    <div class="kpi"><span class="kpi-num">86</span><span class="kpi-label">platforms scored</span></div>
+    <div class="kpi"><span class="kpi-num">+200</span><span class="kpi-label">DKI delta target 90d</span></div>
+    <div class="kpi"><span class="kpi-num">5-8</span><span class="kpi-label">core platforms por caso</span></div>
+  </div>
+
+  <div class="insight"><strong>Diferencial competitivo.</strong> Ningún competidor combina (a) métrica composite cross-platform validada, (b) base de datos de autoridad mantenida trimestralmente, (c) integración nativa con GEORadar para medición LLM real, y (d) ejecución por equipo agencia full-AI. El moat es defensible 18-24 meses.</div>
+
+  <div class="footer">
+    <span>PRD karma-booster · v1.2 · 25 may 2026</span>
+    <span>carlos.ortet@zoopa.es · zoopa.es</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     PAGE 2 · Skill mecánica + DKI + I/O
+═══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-tag">§ 02 · cómo funciona el skill</span>
+    <span class="page-num">02</span>
+  </div>
+
+  <h2 class="page-title">El skill paso a paso<br>+ la <span class="accent">fórmula DKI</span>.</h2>
+
+  <h3 class="section-title"><span class="num">01</span>Flow operacional del skill</h3>
+  <p>Invocación en cualquier sesión Claude Code: <code>karma booster</code> · <code>calcula mi digital karma</code> · <code>evalúa mi perfil online</code>. El skill ejecuta 5 etapas:</p>
+
+  <table>
+    <thead><tr><th>Etapa</th><th>Inputs</th><th>Output intermedio</th><th>Duración</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1 · Profile assessment</strong></td><td>LinkedIn URL · CV PDF · sitio web · cuestionario 6 turnos</td><td><code>{slug}-profile-assessment.md</code></td><td>10 min</td></tr>
+      <tr><td><strong>2 · DKI calculation</strong></td><td>Métricas nativas por plataforma · sector</td><td><code>{slug}-dki-baseline-report.md</code></td><td>5 min</td></tr>
+      <tr><td><strong>3 · Platform prioritization</strong></td><td>DKI breakdown · sector · objetivo · bandwidth</td><td>Ranked list (script <code>authority_score.py</code>)</td><td>2 min</td></tr>
+      <tr><td><strong>4 · Plan generation</strong></td><td>Top 5-8 plataformas · gaps priorizados</td><td><code>{slug}-personalized-plan.md</code></td><td>10 min</td></tr>
+      <tr><td><strong>5 · Handoff</strong></td><td>3 documentos al cliente · check-in quincenal</td><td>Operación Authority Boost 90</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <p class="small">Outputs guardados en <code>~/Documents/claudecode-proj/karma-booster-clients/{slug}/</code> · NUNCA al repo público · GDPR-compliant.</p>
+
+  <h3 class="section-title"><span class="num">02</span>La fórmula DKI</h3>
+
+  <div class="formula">
+<span class="comment"># Digital Karma Index · score 0-1000 cross-platform</span>
+
+DKI = (E × 0.40) + (D × 0.20) + (L × 0.15) + (T × 0.15) + (O × 0.10)
+
+   <span class="accent">E</span> = Earned Authority      <span class="comment"># followers + karma nativos, ponderados por sector relevance</span>
+   <span class="accent">D</span> = Discoverability       <span class="comment"># Wikipedia + Wikidata + Schema.org + Google KP + sector dirs</span>
+   <span class="accent">L</span> = LLM Visibility        <span class="comment"># vía GEORadar: SoV + Position + Sentiment + Co-branding</span>
+   <span class="accent">T</span> = Trust Signals         <span class="comment"># Recommendations + Reviews + Press + Verified + TEDx</span>
+   <span class="accent">O</span> = Owned Anchor          <span class="comment"># sitio personal DA + newsletter + long-form + libros</span>
+  </div>
+
+  <h4 class="subhead">Pesos racionales</h4>
+  <ul>
+    <li><strong>E 40%</strong> · audiencia construida = output más visible, primer signal que ve un decisor</li>
+    <li><strong>D 20%</strong> · sin discoverability nadie te encuentra (multiplica el valor de las otras capas)</li>
+    <li><strong>L 15%</strong> · diferencial Zoopa (capa que ningún SaaS de personal branding mide). Subirá a 20% en V2 cuando GEORadar API integre auto</li>
+    <li><strong>T 15%</strong> · señales que un tercero verifica (recommendations, reviews, press cualificada)</li>
+    <li><strong>O 10%</strong> · base estructural pero menos visible que earned. Foundation no negociable</li>
+  </ul>
+
+  <h4 class="subhead">Tiers cualitativos</h4>
+  <div class="grid-3">
+    <div class="panel"><div class="panel-title">0–300 · entry tiers</div><div class="panel-body">Invisible (0-100) · Emerging (100-300). Gap principal: sin sitio personal + sin presencia consistente.</div></div>
+    <div class="panel"><div class="panel-title">300–700 · niche tiers</div><div class="panel-body">Established en niche (300-500) · Recognized regional/sectorial (500-700). Suele ser donde están la mayoría de profesionales senior antes de AB90.</div></div>
+    <div class="panel"><div class="panel-title">700–1000 · leadership tiers</div><div class="panel-body">Leading authority (700-900) · Top of field globally (900-1000). Pocos llegan; requiere combinación de TEDx + Wikipedia + press tier-1.</div></div>
+  </div>
+
+  <h3 class="section-title"><span class="num">03</span>Inputs y outputs</h3>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title">Inputs aceptados</div>
+      <div class="panel-body">
+        <strong>1 · LinkedIn URL pública</strong> (parsea Headline + About + Featured + Recommendations count + activity recent)<br>
+        <strong>2 · CV / Resume PDF</strong> (extrae experiencia + publications + speaking + awards en memoria, no se guarda)<br>
+        <strong>3 · Sitio web personal</strong> (audit DOC-style de AX + Schema.org + llms.txt)<br>
+        <strong>4 · Cuestionario interactivo</strong> (6 turnos · si cliente no tiene LinkedIn o web)
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">3 documentos output</div>
+      <div class="panel-body">
+        <strong>1 · profile-assessment.md</strong> · sector + sub-sector + audiencia + diferenciador + plataformas presentes/ausentes<br>
+        <strong>2 · dki-baseline-report.md</strong> · DKI total + breakdown 5 capas + gaps priorizados + comparación benchmarks sector<br>
+        <strong>3 · personalized-plan.md</strong> · top 5-8 plataformas core + plan 3 fases (Foundation/Build/Scale) + métricas por sub-fase
+      </div>
+    </div>
+  </div>
+
+  <div class="insight"><strong>Privacidad nativa.</strong> Outputs LOCAL en <code>~/Documents/claudecode-proj/karma-booster-clients/{slug}/</code>. NUNCA commit al repo. Retention 30 días post-cierre. CV procesado en memoria, no se guarda PDF. Cumplimiento GDPR (acceso · borrado · portabilidad en 72h).</div>
+
+  <div class="footer">
+    <span>PRD karma-booster · v1.2 · 25 may 2026</span>
+    <span>carlos.ortet@zoopa.es · zoopa.es</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     PAGE 3 · Platform Authority Database + scoring + mantenimiento
+═══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-tag">§ 03 · platform authority database</span>
+    <span class="page-num">03</span>
+  </div>
+
+  <h2 class="page-title">86 plataformas scored<br>+ <span class="accent">mantenimiento trimestral</span>.</h2>
+
+  <p class="lead">El skill no usa una lista plana de plataformas. Usa una <strong>base de datos viva con scores propietarios en 3 dimensiones</strong>, mantenida trimestralmente con cadencia disciplinada. Es lo que distingue karma-booster de un simple "catálogo".</p>
+
+  <h3 class="section-title"><span class="num">01</span>Las 3 dimensiones de scoring (0-100)</h3>
+  <table>
+    <thead><tr><th>Dimensión</th><th>Qué mide</th><th>Evidencia usada</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>authority.google</strong></td>
+        <td>Cuánto rankea esta plataforma en SERP para queries de identidad (<code>name + sector</code>). Combina DA + Knowledge Panel support + Schema.org nativa.</td>
+        <td>Sample manual de SERPs · inspección de Knowledge Panels reales · datos Ahrefs públicos · análisis <code>site:</code> queries</td>
+      </tr>
+      <tr>
+        <td><strong>authority.llm</strong></td>
+        <td>Frecuencia con la que ChatGPT/Claude/Gemini/Perplexity/AIO citan esta fuente al describir profesionales o marcas.</td>
+        <td>Common Crawl presence · observación directa GEORadar (16+ marcas, ~9M menciones) · sample queries manuales por LLM · reportes públicos Perplexity</td>
+      </tr>
+      <tr>
+        <td><strong>authority.trust</strong></td>
+        <td>Peso como señal de credibilidad para un decisor humano (recruiter · prospect · journalist · board).</td>
+        <td>Friction de signup · verifiability por terceros · industry recognition · halo de la plataforma anfitriona</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="section-title"><span class="num">02</span>Categorías y volumen</h3>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title">19 categorías · 86 plataformas</div>
+      <div class="panel-body">
+        <span class="chip accent">owned_anchor (4)</span>
+        <span class="chip accent">general_distribution (10)</span>
+        <span class="chip">community_qa (5)</span>
+        <span class="chip">editorial_newsletter (6)</span>
+        <span class="chip accent">discoverability (5)</span>
+        <span class="chip">reviews_trust (7)</span>
+        <span class="chip">tech_dev (8)</span>
+        <span class="chip">academic_research (6)</span>
+        <span class="chip">video_audio (5)</span>
+        <span class="chip">sector_creative (5)</span>
+        <span class="chip">sector_entertainment (3)</span>
+        <span class="chip">sector_medical (3)</span>
+        <span class="chip">sector_legal (3)</span>
+        <span class="chip">sector_founder (5)</span>
+        <span class="chip">press_media (2)</span>
+        <span class="chip">creator_economy (2)</span>
+        <span class="chip">events_speaking (3)</span>
+        <span class="chip">emerging_ai_native (2)</span>
+        <span class="chip">press_research (2)</span>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Status tracking</div>
+      <div class="panel-body">
+        <strong>live</strong> · operativa con scores actuales (mayoría)<br>
+        <strong>emerging</strong> · crecimiento sostenido, scoring conservador (Bluesky, Beehiiv, Read.cv, Hugging Face, Replicate)<br>
+        <strong>declining</strong> · scores con discount ×0.85 (Medium, Facebook Page, Mirror.xyz, HackerNoon, Forbes Contributor)<br>
+        <strong>dead</strong> · scores en 0 pero entry conservada para referencias históricas
+      </div>
+    </div>
+  </div>
+
+  <h3 class="section-title"><span class="num">03</span>Compute per cliente (script authority_score.py)</h3>
+  <div class="formula">
+<span class="comment"># Pesos según objetivo del cliente</span>
+objective <span class="accent">google</span>:    w_google=0.55  w_llm=0.20  w_trust=0.25
+objective <span class="accent">llm</span> (GEO): w_google=0.20  w_llm=0.55  w_trust=0.25
+objective <span class="accent">trust</span> B2B: w_google=0.25  w_llm=0.20  w_trust=0.55
+objective <span class="accent">balanced</span>: w_google=0.40  w_llm=0.30  w_trust=0.30
+
+<span class="comment"># Modifiers aplicados</span>
+sector_bonus    × 1.30  <span class="comment"># si match con platform.sectors_bonus</span>
+bandwidth_penalty − (effort × {0.4 low / 0.2 med / 0.05 high})
+status_multiplier × {1.05 emerging / 1.00 live / 0.85 declining / 0.00 dead}
+  </div>
+
+  <p class="small">Ejemplos validados: <strong>tech + LLM obj</strong> → HN (99.9★) · Reddit (99.3★) · Wikipedia (92.8) · X (89.1★) · &nbsp; <strong>designer + Google obj</strong> → Wikipedia (86.8) · Scholar (83.2) · IMDb (81.0) · Behance (79.2★) · &nbsp; <strong>lawyer + Trust obj</strong> → JD Supra (96.6★) · Justia (96.4★) · Wikipedia (91.2)</p>
+
+  <h3 class="section-title"><span class="num">04</span>Sistema de mantenimiento (cadencia trimestral)</h3>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title">Cuatro reviews al año · 90 min cada una</div>
+      <div class="panel-body">
+        <strong>Q1 · 25 ene</strong> · <strong>Q2 · 25 abr</strong> · <strong>Q3 · 25 jul</strong> · <strong>Q4 · 25 oct</strong><br><br>
+        Owner: Carlos Ortet + Mer Canet. Output: PR al repo con cambios + commit firmado.
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Checklist 4 bloques por review</div>
+      <div class="panel-body">
+        <strong>1 · Health check</strong> de las 86 plataformas (DNS · status · scores ±10pt)<br>
+        <strong>2 · Scan candidatas</strong> (Product Hunt · HN · TechCrunch · GEORadar runs)<br>
+        <strong>3 · Demotion</strong> de plataformas en decline → dead<br>
+        <strong>4 · Re-scoring</strong> evidence pass para 5-10 plataformas rotativas
+      </div>
+    </div>
+  </div>
+
+  <p class="small"><strong>Triggers ad-hoc</strong> (fuera de trimestre): plataforma muere o pivota · major algorithm change Google · GEORadar reporta cambio detectable · cliente nuevo en sector no cubierto · nueva plataforma con crecimiento &gt;100% YoY.</p>
+
+  <h3 class="section-title"><span class="num">05</span>Honestidad sobre V1</h3>
+  <p>Scores actuales son <strong>educated estimates basados en conocimiento operacional Zoopa</strong> (16+ marcas en GEORadar, ~9M menciones analizadas), NO en medición sistemática automatizada. Son <strong>direccionales</strong> (±5pt dentro de tier = ruido; diferencias de tier = reales). Roadmap empírico: V1.5 GEORadar API integration → <code>authority.llm</code> auto-update trimestral. V1.7 Common Crawl + Ahrefs check → <code>authority.google</code> empírico.</p>
+
+  <div class="footer">
+    <span>PRD karma-booster · v1.2 · 25 may 2026</span>
+    <span>carlos.ortet@zoopa.es · zoopa.es</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     PAGE 4 · Arquitectura + ecosistema + roadmap
+═══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-tag">§ 04 · stack + ecosistema + roadmap</span>
+    <span class="page-num">04</span>
+  </div>
+
+  <h2 class="page-title">Stack · ecosistema Zoopa<br>+ <span class="accent">roadmap</span>.</h2>
+
+  <h3 class="section-title"><span class="num">01</span>Arquitectura del skill</h3>
+  <div class="formula">
+~/.claude/skills/karma-booster/
+├── SKILL.md                                <span class="comment"># orchestrator</span>
+├── README.md                               <span class="comment"># doc pública del repo</span>
+├── references/
+│   ├── <span class="accent">platform-authority-db.yaml</span>          <span class="comment"># 86 plataformas scored</span>
+│   ├── <span class="accent">platform-authority-methodology.md</span>   <span class="comment"># cómo se asignan scores</span>
+│   ├── <span class="accent">platform-maintenance-system.md</span>      <span class="comment"># cadencia trimestral</span>
+│   ├── platform-catalog-master.md          <span class="comment"># legacy (vista detallada en prosa)</span>
+│   ├── sector-platform-mappings.md         <span class="comment"># legacy (será absorbido V2)</span>
+│   ├── digital-karma-formula.md            <span class="comment"># DKI formula completa</span>
+│   ├── profile-assessment-process.md       <span class="comment"># input processing</span>
+│   ├── phase-system.md                     <span class="comment"># Foundation/Build/Scale</span>
+│   └── content-styles-imports/             <span class="comment"># 8 style guides de content-factory</span>
+├── scripts/
+│   ├── calculate_dki.py                    <span class="comment"># DKI calculator</span>
+│   └── <span class="accent">authority_score.py</span>                  <span class="comment"># compute scoring per cliente CLI</span>
+└── examples/
+    ├── carlos-ortet-case-study.md          <span class="comment"># V1 case study (senior)</span>
+    └── guillermo-cardiel-case-study.md     <span class="comment"># V1.1 case study (junior)</span>
+  </div>
+
+  <h3 class="section-title"><span class="num">02</span>Integración con ecosistema Zoopa / 498A</h3>
+  <table>
+    <thead><tr><th>Componente</th><th>Rol en el flow karma-booster</th></tr></thead>
+    <tbody>
+      <tr><td><strong>karma-booster</strong> (este skill)</td><td>Evaluación inicial + plan personalizado + priorización plataformas</td></tr>
+      <tr><td><strong>content-factory</strong> (skill 498AS)</td><td>Genera el contenido para los canales que karma-booster prioriza, con voces apropiadas</td></tr>
+      <tr><td><strong>GEORadar</strong> (producto Zoopa)</td><td>Mide la L (LLM Visibility) del DKI · roadmap V1.5: API integration para auto-update</td></tr>
+      <tr><td><strong>DOC</strong> (producto Zoopa)</td><td>Optimiza la AX (Agent Experience) del sitio personal del cliente — Capa 1 Owned</td></tr>
+      <tr><td><strong>S.A.M.</strong> (producto Zoopa)</td><td>Valida el contenido producido contra prompts target del nicho</td></tr>
+      <tr><td><strong>LEO</strong> (producto Zoopa)</td><td>Generación contenido multicanal asistida en 30+ plataformas</td></tr>
+      <tr><td><strong>Authority Boost 90</strong> (servicio)</td><td>Ejecución completa del plan generado · 5 tiers desde €1.2K Quick Audit a €10-18K Empresa</td></tr>
+      <tr><td><strong>Zoopa Voices</strong> (network)</td><td>Inclusión gratuita para clientes AB90 · backlinks DA60+ · lever de discoverability</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="section-title"><span class="num">03</span>Case studies publicados</h3>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title">V1 · Carlos Ortet (senior)</div>
+      <div class="panel-body">
+        Tech / Designer · DKI baseline <strong>356</strong> → target 90d <strong>560</strong> (delta <strong>+204</strong>)<br>
+        Tier Established → Recognized regional/sectorial<br>
+        Gap principal: Discoverability (13%) + LLM Visibility (0%)
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">V1.1 · Guille Cardiel (junior, contraste)</div>
+      <div class="panel-body">
+        Workflow design · DKI baseline <strong>142</strong> → target 90d <strong>385</strong> (delta <strong>+243</strong>)<br>
+        Tier Emerging → Established en niche<br>
+        Gap principal: Owned Anchor (28%) + Discoverability (8%)
+      </div>
+    </div>
+  </div>
+  <p class="small">Ambos visibles en <a href="https://zoopa-smart-agency.github.io/authority-boost-90/case-studies.html">sitio público AB90</a>. Demuestran el USP: el método funciona en ambos extremos del seniority.</p>
+
+  <h3 class="section-title"><span class="num">04</span>Roadmap</h3>
+  <table>
+    <thead><tr><th>Versión</th><th>Cuándo</th><th>Hito</th></tr></thead>
+    <tbody>
+      <tr><td><strong>V1.0</strong></td><td>24 may 2026</td><td>Skill creado · case study Carlos Ortet · repo público</td></tr>
+      <tr><td><strong>V1.1</strong></td><td>25 may 2026</td><td>Case study Guille Cardiel · sitio AB90 V1.4 con equipo 6 personas</td></tr>
+      <tr><td><strong>V1.2</strong></td><td>25 may 2026</td><td><strong>Platform Authority Database</strong> · 86 plataformas scored · methodology + maintenance system · authority_score.py</td></tr>
+      <tr><td><strong>V1.3</strong></td><td>Q3 2026</td><td>+5 sectores especializados con primeros clientes externos · 5 case studies</td></tr>
+      <tr><td><strong>V1.5</strong></td><td>Q4 2026</td><td>GEORadar API integration · <code>authority.llm</code> auto-update trimestral · scores empíricos</td></tr>
+      <tr><td><strong>V1.7</strong></td><td>Q1 2027</td><td>Common Crawl + Ahrefs free check integration · <code>authority.google</code> empírico</td></tr>
+      <tr><td><strong>V2.0</strong></td><td>Q2 2027</td><td>Web UI público en <code>zoopa.es/karma-checker</code> · audit free como lead gen</td></tr>
+      <tr><td><strong>V2.5</strong></td><td>Q4 2027</td><td>Self-serve dashboard cliente · reporting quincenal automático</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="section-title"><span class="num">05</span>Riesgos y tradeoffs</h3>
+  <ul>
+    <li><strong>Scores V1 son estimates direccionales</strong>, no empíricos. Mitigación: cadencia trimestral + roadmap V1.5 hacia empírico. Defensa ante cliente documentada en methodology.md</li>
+    <li><strong>Plataformas mueren o pivotan rápido</strong> (HARO→Connectively, Twitter→X). Mitigación: triggers ad-hoc fuera de trimestre + status tracking riguroso</li>
+    <li><strong>20 sectores no cubren todo</strong>; nichos quedan en catch-all dinámico. Mitigación: V1.3+ amplía a 25-30 sectores con clientes externos</li>
+    <li><strong>Sin auto-medición de LLM citation</strong> en V1. Mitigación inmediata: muestreo manual + GEORadar runs · resolución total: V1.5</li>
+  </ul>
+
+  <div class="insight"><strong>El compromiso del skill.</strong> Lista de 86 plataformas + sistema vivo que las prioriza con scores defendibles + mantenimiento disciplinado para no envejecer. No prometemos cubrir 86 canales en 90 días con cada cliente: prometemos elegir bien las 5-8 core y ejecutar a fondo.</div>
+
+  <div class="footer">
+    <span>PRD karma-booster · v1.2 · 25 may 2026</span>
+    <span><a href="https://github.com/ZOOPA-Smart-Agency/karma-booster">github.com/ZOOPA-Smart-Agency/karma-booster</a> · carlos.ortet@zoopa.es</span>
+  </div>
+</div>
+
+</body>
+</html>
