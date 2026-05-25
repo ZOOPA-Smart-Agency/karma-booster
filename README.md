@@ -65,9 +65,75 @@ Detalle completo: [`references/digital-karma-formula.md`](references/digital-kar
 
 Cada sector tiene su mapping de plataformas con pesos `W_sector` 0-3.
 
-## Universo de medios que trabajamos (45+ plataformas en 10 bloques)
+## Platform Authority Database (86 plataformas scored · sistema vivo)
 
-> Lista completa de plataformas contempladas en el método AB90. **La selección y priorización dependen siempre del perfil**: un actor activará IMDb/Spotify/Instagram, un abogado activará JD Supra/Avvo/LinkedIn, un CEO B2B activará LinkedIn/Substack/HN/Crunchbase. El método es el mismo, el mix depende del caso.
+> **A partir de V1.2** el catálogo legacy se sustituye por una **base de datos viva con scores propietarios** en 3 dimensiones (Google authority, LLM authority, Trust signal) + mantenimiento trimestral disciplinado. Ver [`references/platform-authority-db.yaml`](references/platform-authority-db.yaml).
+
+### El qué
+
+86 plataformas catalogadas en 19 categorías. Cada entrada tiene:
+
+- **3 scores de autoridad** (0-100): `google`, `llm`, `trust`
+- **Status**: `live` · `emerging` · `declining` · `dead`
+- **Effort**: cuánto cuesta mantener presencia activa
+- **LLMs citing**: qué LLMs específicamente la usan como fuente
+- **Sectors bonus**: sectores donde puntúa extra
+- **Brings**: 1-liner de qué aporta al perfil
+
+### Cómo se usa
+
+Script `scripts/authority_score.py` compone scores según objetivo + sector + bandwidth del cliente:
+
+```bash
+# Top 12 plataformas para un perfil tech buscando visibilidad LLM
+python scripts/authority_score.py --objective llm --sector tech --bandwidth medium --top 12
+
+# Top 10 para un abogado buscando trust signals
+python scripts/authority_score.py --objective trust --sector lawyer --top 10
+
+# Top 10 sólo de la categoría tech_dev
+python scripts/authority_score.py --category tech_dev --top 10
+
+# Desde un profile YAML
+python scripts/authority_score.py --profile clients/{slug}/profile.yaml
+```
+
+Objectives disponibles: `google` · `llm` · `trust` · `balanced` (default).
+Bandwidth: `low` · `medium` · `high` (penaliza plataformas high-effort si low).
+
+### Pesos por objetivo
+
+| Objetivo | w_google | w_llm | w_trust |
+|---|---|---|---|
+| Aparecer mejor en Google | 0.55 | 0.20 | 0.25 |
+| Aparecer en LLMs (GEO) | 0.20 | 0.55 | 0.25 |
+| Trust signals B2B | 0.25 | 0.20 | 0.55 |
+| Balanced (default) | 0.40 | 0.30 | 0.30 |
+
+### Mantenimiento
+
+Review trimestral disciplinada (25 ene · 25 abr · 25 jul · 25 oct) con checklist en [`references/platform-maintenance-system.md`](references/platform-maintenance-system.md):
+
+1. Health check de las 86 plataformas (DNS + status + scores estimados siguen siendo correctos)
+2. Scan de candidatas nuevas (Product Hunt, HN, TechCrunch, GEORadar runs)
+3. Demotion de plataformas declining/dead
+4. Re-scoring evidence pass para 5-10 platforms (rotativo)
+
+PRs al repo requieren **evidencia citable** (SERP screenshot, respuesta LLM, datos públicos).
+
+### Metodología de scoring
+
+Cómo se asignan los scores (criterios + evidencia + honestidad sobre límites V1) en [`references/platform-authority-methodology.md`](references/platform-authority-methodology.md). Resumen:
+
+- Scores **direccionales** basados en conocimiento operacional Zoopa (16+ marcas en GEORadar, ~9M menciones analizadas)
+- ±5pt dentro de mismo tier es ruido; diferencias de tier son reales
+- Roadmap V2: integration GEORadar API + Common Crawl stats + Ahrefs/Semrush para scores empíricos automatizados
+
+### Vista resumen del universo (para conversación cliente)
+
+> Resumen visible **en el sitio público AB90**: https://zoopa-smart-agency.github.io/authority-boost-90/ (página 03 "Universo de medios"). Útil cuando un prospect quiere ver el alcance sin profundizar en YAML.
+
+Lista compacta original (sigue válida como vista rápida humano-readable):
 
 ### Bloque 01 · Owned anchor (tu casa) — 4
 

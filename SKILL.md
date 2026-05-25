@@ -152,15 +152,16 @@ Plataformas que detectan contenido LLM y bloquean: **Hacker News** (clasificador
 | `SKILL.md` | Este archivo (orchestrator) |
 | `README.md` | Public-facing |
 | `references/digital-karma-formula.md` | DKI formula completa con fórmula matemática |
-| `references/platform-catalog-master.md` | 40+ plataformas con metrics nativas |
-| `references/sector-platform-mappings.md` | Mapping sectores → plataformas prioritarias |
+| `references/platform-authority-db.yaml` | **86 plataformas scored** (Google/LLM/Trust 0-100) · canonical source V1.2+ |
+| `references/platform-authority-methodology.md` | Cómo se asignan los scores · evidencia · honestidad sobre límites V1 |
+| `references/platform-maintenance-system.md` | Cadencia trimestral · checklist · template PR · fuentes a consultar |
+| `references/platform-catalog-master.md` | Catalog legacy V1.0-V1.1 (prosa rica, mantener como vista detallada) |
+| `references/sector-platform-mappings.md` | Mapping sectores → plataformas (legacy, será absorbido en V2) |
 | `references/profile-assessment-process.md` | Cómo procesar inputs + cuestionario manual |
 | `references/phase-system.md` | Foundation/Build/Scale adaptable |
-| `references/sector-specialized-platforms.md` | Deep dive por sector |
 | `references/content-styles-imports/*` | Copias de content-factory (style guides) |
 | `scripts/calculate_dki.py` | Implementation de la fórmula DKI |
-| `scripts/assess_profile.py` | Parser LinkedIn / CV |
-| `scripts/platform_search.py` | Dynamic platform search vía web |
+| `scripts/authority_score.py` | **Compute scoring compuesto** según objective + sector + bandwidth |
 | `templates/*.md` | Output templates |
 | `examples/carlos-ortet-case-study.md` | Case study V1 (senior · Tech/Designer) |
 | `examples/guillermo-cardiel-case-study.md` | Case study V1.1 (junior · Workflow design) |
@@ -178,8 +179,10 @@ Plataformas que detectan contenido LLM y bloquean: **Hacker News** (clasificador
 
 - **V1.0** · 2026-05-24 · skill creado. Case study Carlos Ortet (senior, DKI 356 → 560)
 - **V1.1** · 2026-05-25 · case study Guille Cardiel añadido (junior, DKI 142 → 385) · sitio público AB90 desplegado V1.4
+- **V1.2** · 2026-05-25 · **Platform Authority Database** · 86 platforms scored en 3 dims (Google/LLM/Trust) · methodology doc + maintenance system trimestral + script `authority_score.py`
 
 Próximas iteraciones:
-- V1.2: añadir 5+ sectores especializados con primeros clientes externos
-- V1.5: integration con GEORadar API para LLM visibility automático
+- V1.3: añadir 5+ sectores especializados con primeros clientes externos
+- V1.5: integration con GEORadar API para LLM visibility automático (scores empíricos en lugar de estimados)
+- V1.7: integration Common Crawl + Ahrefs free check para auto-update trimestral
 - V2.0: web UI público en zoopa.es/karma-checker (audit free como lead gen)

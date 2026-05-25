@@ -1,0 +1,1386 @@
+# Platform Authority Database
+# karma-booster skill · Zoopa Smart Agency
+# Schema v1.0 · Last updated 2026-05-25
+#
+# This is the canonical source of truth for which platforms karma-booster
+# considers when scoring a profile and building a personalized 90-day plan.
+#
+# Maintained quarterly. See references/platform-maintenance-system.md
+# for the review cadence, sources, and PR template.
+
+schema_version: "1.0"
+last_full_review: "2026-05-25"
+next_scheduled_review: "2026-08-25"
+total_platforms: 84
+
+# ─────────────────────────────────────────────────────────────────────────
+# SCORING DEFINITIONS (all 0-100 unless noted)
+# ─────────────────────────────────────────────────────────────────────────
+# authority.google     — How well a profile on this platform ranks/appears
+#                        in Google SERP for identity queries ("name + sector"),
+#                        combined with DA, Knowledge Panel support, and
+#                        Schema.org native handling.
+# authority.llm        — How frequently LLMs (ChatGPT, Claude, Gemini,
+#                        Perplexity, Google AIO) cite this source when
+#                        describing professionals/brands. Heuristic combines
+#                        Common Crawl presence + observed citation patterns
+#                        + GEORadar telemetry.
+# authority.trust      — How much weight this platform adds as a credibility
+#                        signal for a third-party decision-maker (recruiter,
+#                        prospect, journalist, board member).
+# effort               — Effort to maintain active presence (0=set & forget,
+#                        100=daily posting).
+# algorithm_google     — Qualitative: low / medium / high
+# algorithm_llms       — Qualitative: low / medium / high
+# llms_citing          — Specific LLMs that demonstrably cite this source
+# sectors_bonus        — Sectors where this platform punches above its base score
+# status               — live · emerging · declining · dead
+# brings               — One-line description of what it adds to a profile
+# last_reviewed        — ISO date of last manual verification
+# notes                — Optional one-line nuance
+
+# ═════════════════════════════════════════════════════════════════════════
+# 01 · OWNED ANCHOR (4)
+# What you fully control. Foundation of the strategy.
+# ═════════════════════════════════════════════════════════════════════════
+
+platforms:
+
+  - slug: personal_website
+    name: Personal website
+    category: owned_anchor
+    authority: {google: 70, llm: 65, trust: 88}
+    effort: 30
+    audience: [all]
+    brings: "Hub canonical. Lo que enlazas desde todo lo demás. Tu Schema.org Person vive aquí. AX-optimizado (llms.txt) lo hace crawleable por GPTBot/ClaudeBot."
+    algorithm_google: medium
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Claude, Perplexity, Copilot, AIO]
+    sectors_bonus: [tech, consulting, founder, academic, writer]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Score Google depende mucho de DA real. Hosting en Vercel/Cloudflare + content sólido puede llegar a DA 35-50 en 12-18m."
+
+  - slug: personal_newsletter
+    name: Personal newsletter (owned list)
+    category: owned_anchor
+    authority: {google: 55, llm: 60, trust: 75}
+    effort: 70
+    audience: [B2B, B2C, niche]
+    brings: "Audiencia owned (no algorítmica). Engagement directo. Convertible a libro, podcast, curso. Subscriber count es trust signal verificable."
+    algorithm_google: low
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Claude]
+    sectors_bonus: [writer, consultant, journalist, academic, founder]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Substack/Beehiiv/Ghost son los hosters principales, pero el activo es la lista, no la plataforma."
+
+  - slug: personal_blog
+    name: Personal blog canonical
+    category: owned_anchor
+    authority: {google: 75, llm: 80, trust: 70}
+    effort: 60
+    audience: [all]
+    brings: "Long-form SEO + GEO. Canonical URL absorbe credit cuando se cross-posts (Medium/Hashnode). Citado por LLMs si gana DA."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, AIO]
+    sectors_bonus: [tech, writer, academic, consultant, journalist]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: personal_podcast
+    name: Personal podcast (hosted)
+    category: owned_anchor
+    authority: {google: 50, llm: 35, trust: 78}
+    effort: 85
+    audience: [B2B, niche]
+    brings: "Audio long-form. Network-building via guest swap. Transcripts indexan en Google + algunos LLMs."
+    algorithm_google: medium
+    algorithm_llms: low
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [consultant, journalist, executive, writer]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "LLM authority sube si subes transcripts al blog canonical."
+
+# ═════════════════════════════════════════════════════════════════════════
+# 02 · GENERAL DISTRIBUTION (10)
+# Mass audiences, varied use cases.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: linkedin
+    name: LinkedIn
+    category: general_distribution
+    authority: {google: 95, llm: 88, trust: 85}
+    effort: 65
+    audience: [B2B, professional, recruiter, executive]
+    brings: "Hub profesional B2B #1. Headline + about + featured + recommendations + newsletter. Perfil casi siempre en top-3 SERP para nombre+sector."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, Copilot, AIO]
+    sectors_bonus: [tech_B2B, consulting, financial, legal, executive, recruiter]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Knowledge Panel often pulls bio from LinkedIn. Newsletter feature tiene boost algorítmico."
+
+  - slug: x_twitter
+    name: X / Twitter
+    category: general_distribution
+    authority: {google: 88, llm: 90, trust: 55}
+    effort: 80
+    audience: [journalist, tech, creator, political]
+    brings: "Real-time discourse. Search + algoritmo te exponen a thought leaders. Citado masivamente en training data LLM (pre-2024 al menos)."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity]
+    sectors_bonus: [journalist, tech, political, academic_public, creator]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Acceso restringido al API + walled garden bajaron LLM authority post-2024 vs pre-2024."
+
+  - slug: bluesky
+    name: Bluesky
+    category: general_distribution
+    authority: {google: 45, llm: 55, trust: 60}
+    effort: 50
+    audience: [tech, journalist, academic, creator]
+    brings: "Refugio tech/academic post-Twitter. Custom DID handle = identity verification. API abierta = más fácil que entre en LLM training."
+    algorithm_google: medium
+    algorithm_llms: medium
+    llms_citing: [Claude, Perplexity]
+    sectors_bonus: [tech, journalist, academic, writer]
+    status: emerging
+    last_reviewed: 2026-05-25
+    notes: "30M users 2026. Crecimiento sostenido. Authority subiendo trimestre a trimestre."
+
+  - slug: threads
+    name: Threads (Meta)
+    category: general_distribution
+    authority: {google: 50, llm: 40, trust: 50}
+    effort: 50
+    audience: [B2C, lifestyle, creator]
+    brings: "Cross-graph Instagram (zero start si tienes IG). Buen reach orgánico 2026 vs algoritmos saturados de X/IG."
+    algorithm_google: medium
+    algorithm_llms: low
+    llms_citing: [ChatGPT]
+    sectors_bonus: [creator, lifestyle, journalist]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: mastodon
+    name: Mastodon (Fediverse)
+    category: general_distribution
+    authority: {google: 40, llm: 35, trust: 65}
+    effort: 50
+    audience: [tech, EU, academic, opensource]
+    brings: "EU tech + open source community. rel=me verification potente. Anti-corporate vibe (UTM links castigados)."
+    algorithm_google: low
+    algorithm_llms: low
+    llms_citing: []
+    sectors_bonus: [tech, academic, opensource, EU_professional]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "LLM authority baja porque ActivityPub no se scrapea fácilmente."
+
+  - slug: facebook_page
+    name: Facebook Page
+    category: general_distribution
+    authority: {google: 70, llm: 50, trust: 45}
+    effort: 55
+    audience: [B2C, local, mass]
+    brings: "Page rankea en SERP para 'nombre + Facebook'. Útil para local business + creator B2C. Personal account no aporta autoridad pro."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT]
+    sectors_bonus: [local_business, creator_B2C, lifestyle, restaurant]
+    status: declining
+    last_reviewed: 2026-05-25
+    notes: "Solo Page cuenta. Reach orgánico erosionado pero todavía indexable. Decline trend pero todavía relevante."
+
+  - slug: instagram
+    name: Instagram
+    category: general_distribution
+    authority: {google: 80, llm: 55, trust: 55}
+    effort: 80
+    audience: [creator, lifestyle, visual_pro, B2C]
+    brings: "Critical para creators visuales (chef, actor, fashion, fitness, design). Reels + Stories + Bio link. Verified badge potente."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [actor, chef, designer, photographer, fitness, fashion, lifestyle]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: tiktok
+    name: TikTok
+    category: general_distribution
+    authority: {google: 75, llm: 45, trust: 40}
+    effort: 90
+    audience: [Gen_Z, creator, mass]
+    brings: "Algoritmo agnóstico de followers (cualquier video puede explotar). Reach Gen Z dominante. Cierta resistencia LLM por contenido video-first."
+    algorithm_google: high
+    algorithm_llms: low
+    llms_citing: [Perplexity]
+    sectors_bonus: [creator, educator_youth, fitness, comedy, gen_z_brand]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Score LLM sube cuando publican transcripts/captions accesibles."
+
+  - slug: youtube
+    name: YouTube
+    category: general_distribution
+    authority: {google: 95, llm: 78, trust: 75}
+    effort: 90
+    audience: [all]
+    brings: "Long-form video sigue siendo top para authority. Channel + about + transcripts indexan. Knowledge Panel a menudo enlaza canal."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, Gemini]
+    sectors_bonus: [educator, tech, creator, musician, comedian]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Gemini cita transcripts YouTube particularmente bien (mismo dueño Google)."
+
+  - slug: quora
+    name: Quora
+    category: general_distribution
+    authority: {google: 82, llm: 75, trust: 50}
+    effort: 70
+    audience: [all]
+    brings: "Long-tail SEO de 5-10 años. Respuestas citadas por LLMs (especialmente Perplexity)."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [Perplexity, ChatGPT, AIO]
+    sectors_bonus: [consultant, tech, academic, professional_service]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Crecimiento de Quora ha bajado pero el archivo histórico sigue rankeando muy bien."
+
+# ═════════════════════════════════════════════════════════════════════════
+# 03 · COMMUNITY / Q&A (5)
+# Reputation built via contribution, not broadcast.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: hackernews
+    name: Hacker News
+    category: community_qa
+    authority: {google: 80, llm: 92, trust: 78}
+    effort: 60
+    audience: [tech, founder, VC, engineer]
+    brings: "Karma es trust signal en tech/founder circles. Show HN puede generar millares de visits. Comments citados masivamente por LLMs."
+    algorithm_google: medium
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, Copilot]
+    sectors_bonus: [tech, founder, VC, engineer, opensource]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Anti-LLM classifier activo (lección Carlos Ortet 24 may 2026). Content 100% manual."
+
+  - slug: reddit
+    name: Reddit
+    category: community_qa
+    authority: {google: 92, llm: 95, trust: 60}
+    effort: 60
+    audience: [all]
+    brings: "SERP dominance post-deal-Google-2024 (Reddit ranks high para casi cualquier query). Citado masivamente por LLMs como fuente de opinión real."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, Gemini, AIO]
+    sectors_bonus: [tech, hobby, consumer, gaming, niche_professional]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Reddit-Google deal 2024 disparó SERP authority. Subreddits específicos = micro-comunidades de alto valor."
+
+  - slug: stack_overflow
+    name: Stack Overflow
+    category: community_qa
+    authority: {google: 90, llm: 95, trust: 88}
+    effort: 50
+    audience: [developer, engineer]
+    brings: "Repu objetiva por reputation score. Citado en cada respuesta técnica de cualquier LLM. Profile rankea en SERP para 'name + technology'."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Copilot, Perplexity]
+    sectors_bonus: [developer, engineer, devops, data_scientist]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Traffic decline post-ChatGPT pero authority como fuente sigue altísima."
+
+  - slug: stack_exchange_family
+    name: Stack Exchange (Math/Physics/Cross Validated/etc.)
+    category: community_qa
+    authority: {google: 78, llm: 85, trust: 80}
+    effort: 50
+    audience: [academic, researcher, niche_pro]
+    brings: "Repu nicheada en sub-disciplinas (matemáticas, física, estadística, etc.). LLMs lo citan en respuestas técnicas no-software."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity]
+    sectors_bonus: [academic, researcher, mathematician, physicist, statistician]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: discord
+    name: Discord (community servers)
+    category: community_qa
+    authority: {google: 30, llm: 25, trust: 50}
+    effort: 50
+    audience: [tech, gaming, creator, AI]
+    brings: "Networking + early signals. No indexable directamente (privado). Útil para construir relaciones, no para visibility pública."
+    algorithm_google: low
+    algorithm_llms: low
+    llms_citing: []
+    sectors_bonus: [tech, gaming, creator, AI_practitioner]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Authority cero en algoritmos. Vale como network builder + insider info."
+
+# ═════════════════════════════════════════════════════════════════════════
+# 04 · EDITORIAL / NEWSLETTER (6)
+# Long-form publishing platforms.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: substack
+    name: Substack
+    category: editorial_newsletter
+    authority: {google: 85, llm: 80, trust: 78}
+    effort: 70
+    audience: [all]
+    brings: "Newsletter + post públicos. Subscriber count visible = trust signal. Comments + Notes = community layer. SERP dominance post-2024."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, AIO]
+    sectors_bonus: [writer, consultant, journalist, academic, founder, analyst]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "LLM authority subió en 2025. Substack es ahora citation source frequent para opinion + analysis."
+
+  - slug: medium
+    name: Medium
+    category: editorial_newsletter
+    authority: {google: 80, llm: 70, trust: 55}
+    effort: 50
+    audience: [tech, writer, professional]
+    brings: "Distribución algorítmica + cross-post canónico (rel=canonical funciona). Tags = discovery. SERP authority alto histórico."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [tech, writer, consultant]
+    status: declining
+    last_reviewed: 2026-05-25
+    notes: "Decline desde paywall agresivo 2023. Pero archivo histórico sigue siendo SERP-dominant. Cross-post canónico vale la pena."
+
+  - slug: linkedin_newsletter
+    name: LinkedIn Newsletter
+    category: editorial_newsletter
+    authority: {google: 75, llm: 60, trust: 80}
+    effort: 60
+    audience: [B2B, professional, executive]
+    brings: "Audience B2B comprable + notification push a subs + boost algorítmico LinkedIn. Trust signal premium (no es cualquiera quien lo activa)."
+    algorithm_google: medium
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Copilot]
+    sectors_bonus: [consultant, executive, financial, B2B_tech]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: beehiiv
+    name: Beehiiv
+    category: editorial_newsletter
+    authority: {google: 50, llm: 30, trust: 65}
+    effort: 65
+    audience: [creator, B2B, newsletter_pro]
+    brings: "Mejor stack técnico que Substack (referrals, segmentación, paywall, ads). Web archive público SEO-friendly."
+    algorithm_google: medium
+    algorithm_llms: low
+    llms_citing: []
+    sectors_bonus: [newsletter_pro, creator, marketer]
+    status: emerging
+    last_reviewed: 2026-05-25
+    notes: "LLM authority baja porque domain es relativamente joven. Subiendo."
+
+  - slug: ghost
+    name: Ghost (self-hosted)
+    category: editorial_newsletter
+    authority: {google: 65, llm: 50, trust: 75}
+    effort: 75
+    audience: [tech_pro, indie, B2B]
+    brings: "Open source + self-hosted + custom domain = máximo control + ownership. Indexabilidad excelente. Memberships nativas."
+    algorithm_google: medium
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Claude]
+    sectors_bonus: [tech, indie_hacker, writer, journalist]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Authority depende 100% del dominio cliente. Mismo motor, distintas autoridades por URL."
+
+  - slug: mirror_xyz
+    name: Mirror.xyz (Web3)
+    category: editorial_newsletter
+    authority: {google: 45, llm: 30, trust: 50}
+    effort: 60
+    audience: [web3, crypto, indie]
+    brings: "On-chain publishing + collect NFT + ENS support. Solo si el perfil tiene contexto crypto/web3, sino cero."
+    algorithm_google: medium
+    algorithm_llms: low
+    llms_citing: []
+    sectors_bonus: [web3, crypto, NFT_artist]
+    status: declining
+    last_reviewed: 2026-05-25
+    notes: "Web3 audience contracted post-2022. Authority decline pero comunidad core activa."
+
+# ═════════════════════════════════════════════════════════════════════════
+# 05 · DISCOVERABILITY / KNOWLEDGE GRAPHS (5)
+# Where indexing makes you "knowable" by algorithms.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: wikipedia
+    name: Wikipedia
+    category: discoverability
+    authority: {google: 100, llm: 100, trust: 95}
+    effort: 30
+    audience: [all]
+    brings: "Maximum-authority source for both Google KG and every LLM. Single biggest move you can make if notable enough. Citation in Wikipedia = de-facto verification."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, Gemini, Copilot, AIO]
+    sectors_bonus: [all_notable]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Notability bar es real. No auto-edit your own page (COI). Estrategia: editar páginas adyacentes + earn citations en prensa primero."
+
+  - slug: wikidata
+    name: Wikidata
+    category: discoverability
+    authority: {google: 90, llm: 95, trust: 88}
+    effort: 25
+    audience: [all]
+    brings: "Knowledge graph estructurado que alimenta Google KP + LLMs. Más fácil que Wikipedia (sin notability bar tan estricta para entries básicas)."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, Gemini, AIO]
+    sectors_bonus: [academic, author, creator, founder, public_figure]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Mejor opción si no aún notable para Wikipedia. Q-number permanente."
+
+  - slug: google_knowledge_panel
+    name: Google Knowledge Panel
+    category: discoverability
+    authority: {google: 100, llm: 80, trust: 95}
+    effort: 35
+    audience: [all]
+    brings: "El módulo lateral que aparece en SERP nombre. Trust signal definitivo + click magnet. No auto-trigger; se construye combinando KG signals (Wikipedia + Wikidata + schema + verified profiles)."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [Gemini, AIO]
+    sectors_bonus: [all_notable]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Cuando aparece, KP es el #1 trust signal. Claim via Google Search Console (Get verified)."
+
+  - slug: schema_org_person
+    name: Schema.org Person markup
+    category: discoverability
+    authority: {google: 75, llm: 60, trust: 65}
+    effort: 15
+    audience: [all]
+    brings: "Markup JSON-LD en el sitio personal que dice 'soy X, trabajo en Y, sameAs LinkedIn/GitHub/...'. Alimenta Google KG + algunos LLMs."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [Gemini, AIO]
+    sectors_bonus: [all]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Coste casi cero. Setup 1h. ROI altísimo."
+
+  - slug: dbpedia
+    name: DBpedia
+    category: discoverability
+    authority: {google: 50, llm: 78, trust: 65}
+    effort: 10
+    audience: [academic, public_figure, author]
+    brings: "Estructurado Wikipedia. Citado por LLMs en knowledge-graph tasks. Se actualiza automáticamente desde Wikipedia."
+    algorithm_google: low
+    algorithm_llms: high
+    llms_citing: [Claude, Gemini]
+    sectors_bonus: [academic, public_figure]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "No editas DBpedia directamente. Aparece si tienes Wikipedia. Mantener Wikipedia limpio = DBpedia limpio."
+
+# ═════════════════════════════════════════════════════════════════════════
+# 06 · REVIEWS / TRUST SIGNALS (7)
+# Third-party validation. Citation source for "is X any good?"
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: google_reviews
+    name: Google Reviews / Local Guide
+    category: reviews_trust
+    authority: {google: 95, llm: 80, trust: 92}
+    effort: 40
+    audience: [B2C, local, professional_service]
+    brings: "Reviews aparecen en KP y SERP. Trust signal #1 para businesses + local pros (médico, abogado, consultor con oficina, restaurador)."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [Gemini, AIO, Perplexity]
+    sectors_bonus: [local_business, medical, legal, hospitality, professional_service]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Volume + recency + rating compound effect. 4.7+ con 50+ reviews es target operacional."
+
+  - slug: trustpilot
+    name: Trustpilot
+    category: reviews_trust
+    authority: {google: 78, llm: 60, trust: 75}
+    effort: 50
+    audience: [B2C, ecommerce, service]
+    brings: "Trust score público + reviews verificadas. Aparece en SERP cuando alguien busca 'X review' o 'X opiniones'."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [Perplexity, ChatGPT]
+    sectors_bonus: [ecommerce, B2C_service, SaaS, financial_service]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: g2
+    name: G2
+    category: reviews_trust
+    authority: {google: 80, llm: 65, trust: 88}
+    effort: 50
+    audience: [B2B_SaaS, enterprise_buyer]
+    brings: "Plataforma #1 review B2B SaaS. Badges (Leader, High Performer) son trust signals premium. SERP dominance para 'X vs Y'."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity, Copilot]
+    sectors_bonus: [B2B_SaaS, enterprise_software]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: capterra
+    name: Capterra
+    category: reviews_trust
+    authority: {google: 75, llm: 55, trust: 75}
+    effort: 50
+    audience: [SMB, mid_market_buyer]
+    brings: "Review platform para software, especialmente SMB. Property Gartner = soft halo. Comparativas indexables."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [SMB_software, vertical_SaaS]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: glassdoor
+    name: Glassdoor
+    category: reviews_trust
+    authority: {google: 80, llm: 70, trust: 70}
+    effort: 30
+    audience: [recruiter, employer_brand, prospect_employee]
+    brings: "Employer brand. CEO approval rating + salaries. Para founders/exec es señal de cultura. Decline post-Indeed merger pero todavía relevante."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [executive, founder, hiring_manager]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: goodreads
+    name: Goodreads
+    category: reviews_trust
+    authority: {google: 85, llm: 80, trust: 80}
+    effort: 30
+    audience: [author, reader, publisher]
+    brings: "El estándar de book reviews. Author profile + rating + reviews trust signal masivo para escritores. Citado por LLMs en literary queries."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, Gemini]
+    sectors_bonus: [author, writer, publisher, academic_publishing]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: amazon_author
+    name: Amazon Author Central
+    category: reviews_trust
+    authority: {google: 88, llm: 75, trust: 82}
+    effort: 30
+    audience: [author, self_publisher]
+    brings: "Author Central page + sales rank + reviews. SERP dominance para 'author name'. Reviews son trust signal real."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [author, writer, self_publisher]
+    status: live
+    last_reviewed: 2026-05-25
+
+# ═════════════════════════════════════════════════════════════════════════
+# 07 · TECH / DEVELOPER (8)
+# Where code-people validate code-people.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: github
+    name: GitHub
+    category: tech_dev
+    authority: {google: 92, llm: 95, trust: 92}
+    effort: 70
+    audience: [developer, engineer, founder_tech]
+    brings: "Activity graph + stars + repos públicos = portfolio + trust signal. Citado por todos los LLMs. Profile siempre top SERP para 'name + tech'."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Copilot, Perplexity, Gemini, AIO]
+    sectors_bonus: [developer, engineer, opensource, tech_founder, AI_researcher]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Domain authority brutal por scrap masivo de GitHub en training data."
+
+  - slug: gitlab
+    name: GitLab
+    category: tech_dev
+    authority: {google: 70, llm: 65, trust: 75}
+    effort: 65
+    audience: [developer, EU_enterprise]
+    brings: "Alternativa GitHub. Especialmente EU + enterprise. Profile menos visible que GitHub pero válido."
+    algorithm_google: medium
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Claude]
+    sectors_bonus: [developer_EU, enterprise_devops]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: devto
+    name: Dev.to
+    category: tech_dev
+    authority: {google: 70, llm: 60, trust: 60}
+    effort: 60
+    audience: [developer]
+    brings: "Community-driven articles. Discovery por tags. Cross-post canónico-friendly. Comments activos. Reach orgánico decente."
+    algorithm_google: medium
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [developer, web_dev, junior_engineer]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: hashnode
+    name: Hashnode
+    category: tech_dev
+    authority: {google: 65, llm: 50, trust: 60}
+    effort: 60
+    audience: [developer, indie]
+    brings: "Blog plataforma para devs. Custom domain free. Cross-post canónico funciona bien. Comunidad menor que Dev.to pero más concentrada."
+    algorithm_google: medium
+    algorithm_llms: medium
+    llms_citing: [ChatGPT]
+    sectors_bonus: [developer, indie_hacker]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: lobsters
+    name: Lobste.rs
+    category: tech_dev
+    authority: {google: 50, llm: 65, trust: 75}
+    effort: 40
+    audience: [senior_engineer, systems, opensource]
+    brings: "HN para senior engineers. Más curado (invite-only). Comments más profundos técnicamente. Karma menor pero pesado en círculos systems."
+    algorithm_google: low
+    algorithm_llms: medium
+    llms_citing: [Claude, Perplexity]
+    sectors_bonus: [systems_engineer, senior_engineer, opensource_maintainer]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Invite-only = barrera entrada. Pero recompensa social/trust alta."
+
+  - slug: hackernoon
+    name: HackerNoon
+    category: tech_dev
+    authority: {google: 75, llm: 55, trust: 50}
+    effort: 50
+    audience: [developer, tech_writer]
+    brings: "Tech blog publication tradicional. Reach mediano. SEO histórico bueno. LLM authority decreciente vs newer specialized sources."
+    algorithm_google: high
+    algorithm_llms: low
+    llms_citing: [ChatGPT]
+    sectors_bonus: [tech_writer, AI_writer]
+    status: declining
+    last_reviewed: 2026-05-25
+
+  - slug: dzone
+    name: DZone
+    category: tech_dev
+    authority: {google: 78, llm: 60, trust: 60}
+    effort: 50
+    audience: [enterprise_dev, java, devops]
+    brings: "Enterprise-leaning. Java/DevOps/Database focus. Refcards y newsletters tienen audiencia leal."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Copilot]
+    sectors_bonus: [enterprise_developer, devops, java_engineer]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: codepen
+    name: CodePen
+    category: tech_dev
+    authority: {google: 70, llm: 50, trust: 60}
+    effort: 40
+    audience: [frontend, designer_dev, creative_coder]
+    brings: "Frontend portfolio público. Pen shares en X/Bluesky. Útil para frontend specialists y design engineers."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Copilot]
+    sectors_bonus: [frontend_dev, design_engineer, creative_coder]
+    status: live
+    last_reviewed: 2026-05-25
+
+# ═════════════════════════════════════════════════════════════════════════
+# 08 · ACADEMIC / RESEARCH (6)
+# Citation networks, h-index, formal authority.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: google_scholar
+    name: Google Scholar
+    category: academic_research
+    authority: {google: 95, llm: 90, trust: 92}
+    effort: 25
+    audience: [academic, researcher]
+    brings: "Author profile + h-index + i10-index + citation graph. Trust signal #1 para académicos. Citado por LLMs en research queries."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, Gemini]
+    sectors_bonus: [academic, researcher, PhD_industry]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Setup gratis 30min. Verify @institution email. Maintain by claiming all your papers."
+
+  - slug: orcid
+    name: ORCID
+    category: academic_research
+    authority: {google: 70, llm: 75, trust: 90}
+    effort: 15
+    audience: [academic, researcher]
+    brings: "Persistent identifier para investigador. Trust signal premium. Aparece en metadata de papers. Bridge entre todas las plataformas académicas."
+    algorithm_google: medium
+    algorithm_llms: high
+    llms_citing: [Claude, Gemini]
+    sectors_bonus: [academic, researcher]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Setup 10min. Required por la mayoría de journals 2026."
+
+  - slug: researchgate
+    name: ResearchGate
+    category: academic_research
+    authority: {google: 88, llm: 78, trust: 78}
+    effort: 35
+    audience: [academic, researcher]
+    brings: "Networking + paper sharing + citation tracking. Profile rankea muy bien en SERP. Q&A interno tiene reputation."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [academic, researcher, biomedical]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Cuidado con copyright; subir solo preprints o open access."
+
+  - slug: semantic_scholar
+    name: Semantic Scholar (AI2)
+    category: academic_research
+    authority: {google: 75, llm: 88, trust: 80}
+    effort: 15
+    audience: [academic, AI_researcher]
+    brings: "AI-powered citation graph. Mejor que Google Scholar para AI/CS papers. Influential citation tracking."
+    algorithm_google: medium
+    algorithm_llms: high
+    llms_citing: [Claude, ChatGPT, Perplexity]
+    sectors_bonus: [AI_researcher, CS_academic, biomedical]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Built by Allen Institute. LLMs lo respetan especialmente."
+
+  - slug: arxiv
+    name: arXiv
+    category: academic_research
+    authority: {google: 92, llm: 95, trust: 90}
+    effort: 50
+    audience: [academic, AI_researcher, physicist]
+    brings: "Preprint server #1 para CS/ML/Physics/Math. Citation source masivo para LLMs. Subir preprint = entrada permanente al canon."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, Gemini, Copilot]
+    sectors_bonus: [AI_researcher, ML_engineer, physicist, mathematician, CS_academic]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Endorsement gate primera vez. Después self-submit. Authority compuesta por co-author network."
+
+  - slug: ssrn
+    name: SSRN
+    category: academic_research
+    authority: {google: 78, llm: 70, trust: 80}
+    effort: 40
+    audience: [academic_business, law, social_science]
+    brings: "Preprint server para business/economics/law/social science. Owned by Elsevier. Download count visible como trust signal."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [business_academic, law, economist, social_scientist]
+    status: live
+    last_reviewed: 2026-05-25
+
+# ═════════════════════════════════════════════════════════════════════════
+# 09 · VIDEO / AUDIO / PODCAST (5)
+# Long-form & spoken content.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: vimeo
+    name: Vimeo
+    category: video_audio
+    authority: {google: 75, llm: 55, trust: 75}
+    effort: 60
+    audience: [filmmaker, design, creative_pro]
+    brings: "Premium video hosting. Calidad percibida > YouTube en círculos creative. Useful para portfolio audiovisual + reels professional."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [filmmaker, designer, photographer, creative_pro]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: twitch
+    name: Twitch
+    category: video_audio
+    authority: {google: 70, llm: 40, trust: 50}
+    effort: 95
+    audience: [gaming, creator, live_streamer]
+    brings: "Live streaming dominante. Gaming + cada vez más Just Chatting + creative. Authority para creators de audiencia engaged."
+    algorithm_google: high
+    algorithm_llms: low
+    llms_citing: [Perplexity]
+    sectors_bonus: [gamer, streamer, music_producer, creative_coder]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "VOD authority depende de cómo gestiones highlights."
+
+  - slug: spotify_podcasters
+    name: Spotify for Podcasters
+    category: video_audio
+    authority: {google: 75, llm: 60, trust: 75}
+    effort: 70
+    audience: [podcast_host, audio_creator]
+    brings: "Distribución podcast dominante en EU. Anchor (now SfP) = host gratis. Discovery por categorías + Wrapped."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [podcast_host, audio_journalist, audio_educator]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: apple_podcasts
+    name: Apple Podcasts
+    category: video_audio
+    authority: {google: 80, llm: 65, trust: 80}
+    effort: 35
+    audience: [podcast_listener_US, podcast_host]
+    brings: "Charts dominantes en US. Subscriptions de pago. Authority signal premium (Apple ranking influye)."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [podcast_host]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: podchaser
+    name: Podchaser
+    category: video_audio
+    authority: {google: 70, llm: 55, trust: 70}
+    effort: 25
+    audience: [podcast_industry, journalist]
+    brings: "IMDB de podcasts. Profile + credits + reviews. Útil para podcast hosts y guests para construir credit graph."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [Perplexity]
+    sectors_bonus: [podcast_host, podcast_guest_pro]
+    status: live
+    last_reviewed: 2026-05-25
+
+# ═════════════════════════════════════════════════════════════════════════
+# 10 · CREATIVE / DESIGN (5)
+# Visual portfolio platforms.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: dribbble
+    name: Dribbble
+    category: sector_creative
+    authority: {google: 82, llm: 60, trust: 75}
+    effort: 60
+    audience: [designer, agency, recruiter_creative]
+    brings: "Portfolio designer mainstream. Job board integrado. Shots = micro-portfolio. Pro account boost discovery."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [designer, UI_designer, illustrator, brand_designer]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: behance
+    name: Behance
+    category: sector_creative
+    authority: {google: 88, llm: 65, trust: 78}
+    effort: 65
+    audience: [designer, creative_director, recruiter]
+    brings: "Property Adobe = SERP dominance. Long-form projects (vs Dribbble shots). Profile siempre top SERP para designer names."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [designer, creative_director, brand_strategist, illustrator]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: are_na
+    name: Are.na
+    category: sector_creative
+    authority: {google: 50, llm: 40, trust: 70}
+    effort: 35
+    audience: [designer_intellectual, artist, researcher_creative]
+    brings: "Curated channels + visual thinking. Trust signal en círculos thoughtful design/art. No mass reach pero respeto alto."
+    algorithm_google: low
+    algorithm_llms: low
+    llms_citing: []
+    sectors_bonus: [designer_intellectual, artist_research, curator]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: awwwards
+    name: Awwwards
+    category: sector_creative
+    authority: {google: 80, llm: 55, trust: 85}
+    effort: 30
+    audience: [web_designer, agency, frontend_dev]
+    brings: "Awards web design + design portfolio competitivo. Site of the Day/Month/Year son trust signals premium en industria."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [web_designer, frontend_dev, design_agency]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: read_cv
+    name: Read.cv
+    category: sector_creative
+    authority: {google: 45, llm: 25, trust: 75}
+    effort: 25
+    audience: [designer, design_engineer, product_pro]
+    brings: "CV-style profile para design + product community. Concise, well-typeset. Network effect creciendo."
+    algorithm_google: low
+    algorithm_llms: low
+    llms_citing: []
+    sectors_bonus: [designer, product_manager, design_engineer]
+    status: emerging
+    last_reviewed: 2026-05-25
+
+# ═════════════════════════════════════════════════════════════════════════
+# 11 · ENTERTAINMENT / MEDIA (3)
+# Actor, musician, performer.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: imdb
+    name: IMDb
+    category: sector_entertainment
+    authority: {google: 100, llm: 95, trust: 92}
+    effort: 40
+    audience: [actor, filmmaker, agent, producer]
+    brings: "El estándar absoluto para film/TV credits. SERP dominance para cualquier nombre con credit. STARmeter ranking + bio + filmography."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, Gemini, AIO]
+    sectors_bonus: [actor, director, screenwriter, producer, cinematographer]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "IMDbPro $20/mes desbloquea STARmeter + contact info. Vale la pena para profesionales activos."
+
+  - slug: spotify_artists
+    name: Spotify for Artists
+    category: sector_entertainment
+    authority: {google: 92, llm: 75, trust: 85}
+    effort: 50
+    audience: [musician, podcaster_indie]
+    brings: "Profile + monthly listeners + verified badge + canvas + Wrapped storytelling. Trust signal musical principal."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Perplexity, Gemini]
+    sectors_bonus: [musician, music_producer, band]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: allmusic
+    name: AllMusic
+    category: sector_entertainment
+    authority: {google: 78, llm: 80, trust: 75}
+    effort: 20
+    audience: [musician, music_critic, historian]
+    brings: "Enciclopedia música. Citado masivamente por LLMs en queries musicales. Biografías curadas editorialmente."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, Gemini]
+    sectors_bonus: [musician, music_historian, music_journalist]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "No editas tu propia entrada. Si tu música cobra tracción, AllMusic la indexa."
+
+# ═════════════════════════════════════════════════════════════════════════
+# 12 · MEDICAL (3)
+# Healthcare professionals.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: doximity
+    name: Doximity
+    category: sector_medical
+    authority: {google: 78, llm: 55, trust: 90}
+    effort: 30
+    audience: [physician, healthcare]
+    brings: "LinkedIn para médicos US. Verificado por NPI. Trust signal premium en healthcare professional networking."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [physician_US, healthcare_executive, nurse_practitioner]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "US only. EU equivalent es mucho más fragmentado."
+
+  - slug: sermo
+    name: Sermo
+    category: sector_medical
+    authority: {google: 55, llm: 35, trust: 78}
+    effort: 35
+    audience: [physician, global_medical]
+    brings: "Global physician network privado. Discussions + opinions + paid surveys. Trust signal pero discovery cero."
+    algorithm_google: low
+    algorithm_llms: low
+    llms_citing: []
+    sectors_bonus: [physician]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: healthgrades
+    name: Healthgrades
+    category: sector_medical
+    authority: {google: 88, llm: 65, trust: 80}
+    effort: 25
+    audience: [patient, healthcare]
+    brings: "Patient reviews + verified credentials. SERP dominance para 'Dr. X reviews'. Critical para physicians con consulta privada."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity, Gemini]
+    sectors_bonus: [physician, dentist, chiropractor]
+    status: live
+    last_reviewed: 2026-05-25
+
+# ═════════════════════════════════════════════════════════════════════════
+# 13 · LEGAL (3)
+# Law professionals.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: jd_supra
+    name: JD Supra
+    category: sector_legal
+    authority: {google: 85, llm: 70, trust: 85}
+    effort: 50
+    audience: [lawyer, GC, legal_buyer]
+    brings: "Thought leadership platform para lawyers. Publica analysis + alerts. SEO authority alto. Citado por LLMs en legal queries."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity]
+    sectors_bonus: [lawyer, paralegal, general_counsel]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: avvo
+    name: Avvo
+    category: sector_legal
+    authority: {google: 88, llm: 55, trust: 75}
+    effort: 30
+    audience: [consumer_legal, lawyer]
+    brings: "Lawyer directory + reviews + Q&A. Avvo rating 1-10 = trust signal. SERP dominance para 'lawyer in [city]'."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [Perplexity]
+    sectors_bonus: [consumer_lawyer, personal_injury, family_law]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "US primarily. Q&A activo = double duty (visibility + reputation)."
+
+  - slug: justia
+    name: Justia
+    category: sector_legal
+    authority: {google: 82, llm: 75, trust: 80}
+    effort: 35
+    audience: [lawyer, paralegal, legal_research]
+    brings: "Free legal info platform. Lawyer profile + verdicts + practice areas. Citado en research queries por LLMs."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity]
+    sectors_bonus: [lawyer, paralegal, legal_writer]
+    status: live
+    last_reviewed: 2026-05-25
+
+# ═════════════════════════════════════════════════════════════════════════
+# 14 · FOUNDER / STARTUP (5)
+# Where startups + founders get indexed.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: crunchbase
+    name: Crunchbase
+    category: sector_founder
+    authority: {google: 92, llm: 90, trust: 88}
+    effort: 30
+    audience: [founder, VC, journalist, prospect_employee]
+    brings: "Standard para startup data. Founder profile + funding rounds + team. SERP top para company name + founder name."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, Gemini, Copilot]
+    sectors_bonus: [founder, VC, startup_executive, M_and_A_advisor]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Pro $99/mes desbloquea export. Free tier suficiente para profile maintenance."
+
+  - slug: wellfound_angellist
+    name: Wellfound (ex-AngelList)
+    category: sector_founder
+    authority: {google: 78, llm: 60, trust: 75}
+    effort: 35
+    audience: [founder, startup_employee, early_stage_VC]
+    brings: "Job board startup-centric + investor profiles. Talent marketplace activo. Founder profile + portfolio companies."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [founder, early_stage_employee, startup_recruiter]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: indie_hackers
+    name: Indie Hackers
+    category: sector_founder
+    authority: {google: 72, llm: 65, trust: 80}
+    effort: 50
+    audience: [bootstrapper, indie_founder, solopreneur]
+    brings: "Community bootstrappers. Revenue transparency + interviews. Trust signal en indie founder circles."
+    algorithm_google: medium
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [indie_founder, bootstrapper, solopreneur, SaaS_indie]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: product_hunt
+    name: Product Hunt
+    category: sector_founder
+    authority: {google: 85, llm: 70, trust: 75}
+    effort: 30
+    audience: [tech_early_adopter, founder, maker]
+    brings: "Launch platform. Maker profile + products + endorsements. 'Hunted X products' = trust signal. SEO authority alto."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [maker, indie_founder, designer_indie, AI_tool_maker]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: dealroom
+    name: Dealroom
+    category: sector_founder
+    authority: {google: 70, llm: 55, trust: 78}
+    effort: 25
+    audience: [EU_founder, EU_VC, M_and_A]
+    brings: "EU equivalent de Crunchbase. Más fuerte en EU/UK ecosystem data. Profile premium pero accesible."
+    algorithm_google: medium
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [EU_founder, EU_investor, M_and_A_EU]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Especialmente relevante para founders en EU/UK ecosystem."
+
+# ═════════════════════════════════════════════════════════════════════════
+# 15 · PRESS / BIG MEDIA OUTLETS (2)
+# Where journalist-bylines and contributor positions live.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: forbes_contributor
+    name: Forbes Contributor
+    category: press_media
+    authority: {google: 95, llm: 85, trust: 80}
+    effort: 70
+    audience: [B2B, executive, mass_business]
+    brings: "Domain authority Forbes = SERP dominance instantánea. Contributor byline = trust signal premium. Citado por LLMs."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, Gemini]
+    sectors_bonus: [consultant, executive, founder, financial_pro]
+    status: declining
+    last_reviewed: 2026-05-25
+    notes: "Forbes scaled back Contributor program 2024. Más difícil acceder. Sigue siendo authority si lo consigues."
+
+  - slug: hbr_org
+    name: Harvard Business Review (HBR.org)
+    category: press_media
+    authority: {google: 95, llm: 95, trust: 95}
+    effort: 90
+    audience: [executive, MBA, B2B_strategic]
+    brings: "Authority máxima en business thinking. Single HBR article = career boost. Citation source masivo para LLMs en business queries."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, Gemini, Copilot]
+    sectors_bonus: [consultant, executive, business_academic]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Editorial gate brutal. Pero ROI 10×. Worth pitch via established consultant rolodex."
+
+# ═════════════════════════════════════════════════════════════════════════
+# 16 · CREATOR ECONOMY (2)
+# Direct monetization platforms.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: patreon
+    name: Patreon
+    category: creator_economy
+    authority: {google: 85, llm: 60, trust: 70}
+    effort: 65
+    audience: [creator, supporter, fan]
+    brings: "Monetización directa subscriber. Page público + tiers + ratio supporter/follower = trust signal."
+    algorithm_google: high
+    algorithm_llms: medium
+    llms_citing: [Perplexity]
+    sectors_bonus: [podcaster_indie, YouTuber, writer_indie, artist]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: gumroad
+    name: Gumroad
+    category: creator_economy
+    authority: {google: 70, llm: 50, trust: 70}
+    effort: 40
+    audience: [creator, indie_product]
+    brings: "E-commerce minimal para creators. Profile + products + total sold visible. Trust signal indie products."
+    algorithm_google: medium
+    algorithm_llms: medium
+    llms_citing: [Perplexity]
+    sectors_bonus: [course_creator, indie_software, design_template_seller]
+    status: live
+    last_reviewed: 2026-05-25
+
+# ═════════════════════════════════════════════════════════════════════════
+# 17 · EVENTS / SPEAKING (3)
+# Where you're physically/virtually present as authority.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: ted_tedx
+    name: TED / TEDx
+    category: events_speaking
+    authority: {google: 100, llm: 92, trust: 95}
+    effort: 95
+    audience: [global, intellectual, mass]
+    brings: "TED talk = lifetime authority asset. Even TEDx local talk SERP-dominates a name. Embed everywhere. LLMs citan transcripts."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, Gemini]
+    sectors_bonus: [thought_leader, scientist, activist, educator, social_entrepreneur]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "Application gate. Camino realista: TEDx local primero, mainstage después."
+
+  - slug: meetup
+    name: Meetup
+    category: events_speaking
+    authority: {google: 78, llm: 50, trust: 65}
+    effort: 60
+    audience: [local_community, hobby, professional_meetup]
+    brings: "Organizer profile + event history. Trust signal en local pro communities. SEO authority alto para 'X meetup in city'."
+    algorithm_google: high
+    algorithm_llms: low
+    llms_citing: [Perplexity]
+    sectors_bonus: [community_builder, tech_organizer, local_pro]
+    status: live
+    last_reviewed: 2026-05-25
+
+  - slug: sessionize
+    name: Sessionize
+    category: events_speaking
+    authority: {google: 65, llm: 35, trust: 78}
+    effort: 30
+    audience: [tech_speaker, conference_organizer]
+    brings: "Speaker profile + bio + sessions delivered + conferences spoken. Used by tech conferences for CFP. Trust signal speaker reel."
+    algorithm_google: medium
+    algorithm_llms: low
+    llms_citing: []
+    sectors_bonus: [tech_speaker, conference_speaker, developer_advocate]
+    status: live
+    last_reviewed: 2026-05-25
+
+# ═════════════════════════════════════════════════════════════════════════
+# 18 · EMERGING / AI-NATIVE (2)
+# Newer platforms specifically built for AI era.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: hugging_face
+    name: Hugging Face
+    category: emerging_ai_native
+    authority: {google: 88, llm: 90, trust: 88}
+    effort: 60
+    audience: [ML_engineer, AI_researcher, data_scientist]
+    brings: "Profile + Spaces + models + datasets. Citado por LLMs en ML queries (mismo dueño/influencia). Trust signal #1 ML community."
+    algorithm_google: high
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Perplexity, Copilot, Gemini]
+    sectors_bonus: [ML_engineer, AI_researcher, data_scientist, AI_practitioner]
+    status: emerging
+    last_reviewed: 2026-05-25
+    notes: "Authority subiendo trimestre a trimestre. Será top-10 cross-platform en 2027."
+
+  - slug: replicate
+    name: Replicate
+    category: emerging_ai_native
+    authority: {google: 70, llm: 75, trust: 75}
+    effort: 50
+    audience: [ML_engineer, AI_indie_dev]
+    brings: "ML model deployment + sharing. Profile + models published. Used + cited en ML deployment queries."
+    algorithm_google: medium
+    algorithm_llms: high
+    llms_citing: [ChatGPT, Claude, Copilot]
+    sectors_bonus: [ML_engineer, AI_indie_dev, model_creator]
+    status: emerging
+    last_reviewed: 2026-05-25
+
+# ═════════════════════════════════════════════════════════════════════════
+# 19 · PRESS RESEARCH / SOURCE (2)
+# Where journalists find experts.
+# ═════════════════════════════════════════════════════════════════════════
+
+  - slug: haro_qwoted
+    name: HARO / Qwoted / Connectively
+    category: press_research
+    authority: {google: 30, llm: 25, trust: 80}
+    effort: 60
+    audience: [journalist, expert_source]
+    brings: "Sourcing platform donde journalists piden experts. No genera authority per se; genera placements en outlets que sí dan authority (Forbes, NYT, Bloomberg)."
+    algorithm_google: low
+    algorithm_llms: low
+    llms_citing: []
+    sectors_bonus: [consultant, executive, academic, expert_witness]
+    status: live
+    last_reviewed: 2026-05-25
+    notes: "HARO sold to Connectively 2024. Cierra ese año; Qwoted toma relevo. Mecánica idéntica: pitch, get quoted, syndicate."
+
+  - slug: muck_rack
+    name: Muck Rack
+    category: press_research
+    authority: {google: 70, llm: 60, trust: 75}
+    effort: 25
+    audience: [journalist, PR, expert_source]
+    brings: "Database de journalists. Profile expert vinculable. Used by PR teams para sourcing. Indexable por LLMs."
+    algorithm_google: medium
+    algorithm_llms: medium
+    llms_citing: [ChatGPT, Perplexity]
+    sectors_bonus: [journalist, PR_pro, expert_source]
+    status: live
+    last_reviewed: 2026-05-25
