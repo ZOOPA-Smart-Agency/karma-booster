@@ -65,19 +65,66 @@ Detalle completo: [`references/digital-karma-formula.md`](references/digital-kar
 
 Cada sector tiene su mapping de plataformas con pesos `W_sector` 0-3.
 
-## Plataformas catalogadas (45)
+## Universo de medios que trabajamos (45+ plataformas en 10 bloques)
 
-- **10 generales** (LinkedIn, X, Bluesky, Threads, Mastodon, FB, Instagram, TikTok, YouTube)
-- **4 community/Q&A** (HN, Reddit, Quora, Stack Overflow)
-- **4 editorial** (Substack, Medium, LinkedIn Newsletter, Beehiiv)
-- **6 tech** (GitHub, Dev.to, Hashnode, Lobste.rs, HackerNoon, DZone)
-- **5 academic** (Google Scholar, ORCID, ResearchGate, SemanticScholar, arXiv)
-- **6 reviews** (Google, Trustpilot, G2, Glassdoor, Goodreads, Amazon)
-- **14 sector-specialized** (IMDb, Spotify, Doximity, ArchDaily, Dribbble, etc.)
-- **4 discoverability** (Wikipedia, Wikidata, Google KP, Schema.org)
-- **2 events** (TED/TEDx, conference circuit)
+> Lista completa de plataformas contempladas en el método AB90. **La selección y priorización dependen siempre del perfil**: un actor activará IMDb/Spotify/Instagram, un abogado activará JD Supra/Avvo/LinkedIn, un CEO B2B activará LinkedIn/Substack/HN/Crunchbase. El método es el mismo, el mix depende del caso.
 
-Catálogo: [`references/platform-catalog-master.md`](references/platform-catalog-master.md)
+### Bloque 01 · Owned anchor (tu casa) — 4
+
+`Web personal` · `Newsletter` · `Blog canonical` · `Podcast host`
+
+### Bloque 02 · Generales de distribución — 10
+
+`LinkedIn` · `X / Twitter` · `Bluesky` · `Threads` · `Mastodon` · `Facebook` · `Instagram` · `TikTok` · `YouTube` · `Quora`
+
+### Bloque 03 · Comunidad / Q&A — 4
+
+`Hacker News` · `Reddit` · `Stack Overflow` · `Discord`
+
+### Bloque 04 · Editorial / Newsletter — 4
+
+`Substack` · `Medium` · `LinkedIn Newsletter` · `Beehiiv`
+
+### Bloque 05 · Discoverability / Knowledge graphs — 4
+
+`Wikipedia` · `Wikidata` · `Google Knowledge Panel` · `Schema.org Person`
+
+### Bloque 06 · Reviews / Trust signals — 6
+
+`Google Reviews / Local Guide` · `Trustpilot` · `G2` · `Glassdoor` · `Goodreads` · `Amazon Author`
+
+### Bloque 07 · Tech-specific (devs, founders, makers) — 6
+
+`GitHub` · `Dev.to` · `Hashnode` · `Lobste.rs` · `HackerNoon` · `DZone`
+
+### Bloque 08 · Academic / Research — 5
+
+`Google Scholar` · `ORCID` · `ResearchGate` · `Semantic Scholar` · `arXiv`
+
+### Bloque 09 · Sector-specialized — 14+
+
+`IMDb` · `Spotify for Artists` · `Doximity` · `Sermo` · `JD Supra` · `Avvo` · `Dribbble` · `Behance` · `ArchDaily` · `Dezeen` · `Crunchbase` · `AngelList` · `Indie Hackers` · `Product Hunt`
+
+Mapping ejemplo por sector:
+- **Actor**: IMDb · Spotify · Instagram · TikTok
+- **Médico**: Doximity · Sermo · Google Reviews
+- **Abogado**: JD Supra · Avvo · LinkedIn
+- **Diseñador**: Dribbble · Behance · Are.na
+- **Arquitecto**: ArchDaily · Dezeen · Instagram
+- **Founder**: Crunchbase · AngelList · Product Hunt
+
+### Bloque 10 · Comunidad activa · Events · LLM surfaces — 8
+
+`TED / TEDx` · `Conference circuit` · `Podcast guesting` · `HARO / Qwoted` · `ChatGPT` · `Claude` · `Perplexity` · `Google AI Overviews`
+
+> Las 4 superficies LLM (capa 5 del framework) se miden con **GEORadar** (SoV · Position · Sentiment · Co-branding). Ningún competidor de personal branding las cubre.
+
+### Regla operativa
+
+En el kickoff calculamos DKI baseline y elegimos contigo las **5-8 plataformas core** donde concentrar Foundation / Build / Scale. El resto queda en mantenimiento de identidad. No prometemos cubrir 45 canales en 90 días: prometemos elegir bien y ejecutar a fondo.
+
+Catálogo técnico completo (con métricas + normalizaciones): [`references/platform-catalog-master.md`](references/platform-catalog-master.md)
+Mapping sectorial con pesos: [`references/sector-platform-mappings.md`](references/sector-platform-mappings.md)
 
 ## Cómo usar el skill
 
