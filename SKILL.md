@@ -162,7 +162,8 @@ Plataformas que detectan contenido LLM y bloquean: **Hacker News** (clasificador
 | `scripts/assess_profile.py` | Parser LinkedIn / CV |
 | `scripts/platform_search.py` | Dynamic platform search vía web |
 | `templates/*.md` | Output templates |
-| `examples/carlos-ortet-case-study.md` | First case study |
+| `examples/carlos-ortet-case-study.md` | Case study V1 (senior · Tech/Designer) |
+| `examples/guillermo-cardiel-case-study.md` | Case study V1.1 (junior · Workflow design) |
 
 ## Integración con otros skills
 
@@ -170,12 +171,15 @@ Plataformas que detectan contenido LLM y bloquean: **Hacker News** (clasificador
 - **GEORadar** (Zoopa producto): integra como Capa 5 (LLM visibility) del DKI
 - **DOC** (Zoopa): optimiza la AX del sitio personal del cliente como parte de Foundation phase
 - **Authority Boost 90** (servicio Zoopa): karma-booster es la herramienta de evaluación inicial del servicio AB90
+  - Sitio público compartible: https://zoopa-smart-agency.github.io/authority-boost-90/
+  - Page case studies: https://zoopa-smart-agency.github.io/authority-boost-90/case-studies.html
 
 ## Versionado
 
-V1.0 · 2026-05-24 · skill creado. Case study único: Carlos Ortet.
+- **V1.0** · 2026-05-24 · skill creado. Case study Carlos Ortet (senior, DKI 356 → 560)
+- **V1.1** · 2026-05-25 · case study Guille Cardiel añadido (junior, DKI 142 → 385) · sitio público AB90 desplegado V1.4
 
 Próximas iteraciones:
-- V1.1: añadir 5+ sectores especializados con primeros clientes
+- V1.2: añadir 5+ sectores especializados con primeros clientes externos
 - V1.5: integration con GEORadar API para LLM visibility automático
 - V2.0: web UI público en zoopa.es/karma-checker (audit free como lead gen)
